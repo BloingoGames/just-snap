@@ -9,4 +9,18 @@ CardViewer = NodePath("CardViewer")
 
 [node name="CardViewer" type="Node2D" parent="."]
 
+[node name="Slot0" type="Node2D" parent="CardViewer"]
+position = Vector2(-200, 0)
+
+[node name="Slot1" type="Node2D" parent="CardViewer"]
+position = Vector2(-100, 0)
+
+[node name="Slot2" type="Node2D" parent="CardViewer"]
+
+[node name="Slot3" type="Node2D" parent="CardViewer"]
+position = Vector2(100, 0)
+
+[node name="Slot4" type="Node2D" parent="CardViewer"]
+position = Vector2(200, 0)
+
 [node name="Hand" type="Node2D" parent="."]

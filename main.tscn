@@ -9,10 +9,10 @@
 [node name="Deck" parent="." instance=ExtResource("2_cxvfi")]
 
 [node name="Player1" parent="." instance=ExtResource("1_78llg")]
-position = Vector2(-50, 60)
+position = Vector2(0, 120)
 
 [node name="Player2" parent="." instance=ExtResource("1_78llg")]
-position = Vector2(50, 60)
+position = Vector2(0, -120)
 playerID = 1
 
 [node name="Dealer" type="Node2D" parent="." node_paths=PackedStringArray("Deck", "Player1", "Player2")]
