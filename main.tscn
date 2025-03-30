@@ -9,6 +9,7 @@
 [node name="Player1" parent="." instance=ExtResource("1_78llg")]
 
 [node name="Player2" parent="." instance=ExtResource("1_78llg")]
+playerID = 1
 
 [node name="Deck" parent="." instance=ExtResource("2_cxvfi")]
 
