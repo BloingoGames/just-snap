@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3uw3hu5lhjt0"]
+[gd_scene load_steps=3 format=3 uid="uid://d3uw3hu5lhjt0"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_12sos"]
+[ext_resource type="Script" path="res://scripts/slot.gd" id="2_kjsxe"]
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("Hand", "CardViewer")]
 script = ExtResource("1_12sos")
@@ -11,16 +12,21 @@ CardViewer = NodePath("CardViewer")
 
 [node name="Slot0" type="Node2D" parent="CardViewer"]
 position = Vector2(-200, 0)
+script = ExtResource("2_kjsxe")
 
 [node name="Slot1" type="Node2D" parent="CardViewer"]
 position = Vector2(-100, 0)
+script = ExtResource("2_kjsxe")
 
 [node name="Slot2" type="Node2D" parent="CardViewer"]
+script = ExtResource("2_kjsxe")
 
 [node name="Slot3" type="Node2D" parent="CardViewer"]
 position = Vector2(100, 0)
+script = ExtResource("2_kjsxe")
 
 [node name="Slot4" type="Node2D" parent="CardViewer"]
 position = Vector2(200, 0)
+script = ExtResource("2_kjsxe")
 
 [node name="Hand" type="Node2D" parent="."]
