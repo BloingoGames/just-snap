@@ -16,3 +16,6 @@ func deal(players):
 	for player in players:
 		for i in range(0,toDeal):
 			Deck.get_child(0).reparent(player.get_node("Hand")) #Move card nodes from Deck to Player Hand
+	
+	Player1.showHand()
+	Player2.showHand()

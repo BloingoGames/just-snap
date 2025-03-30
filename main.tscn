@@ -6,15 +6,20 @@
 
 [node name="Main" type="Node2D"]
 
+[node name="Deck" parent="." instance=ExtResource("2_cxvfi")]
+
 [node name="Player1" parent="." instance=ExtResource("1_78llg")]
+position = Vector2(-50, 60)
 
 [node name="Player2" parent="." instance=ExtResource("1_78llg")]
+position = Vector2(50, 60)
 playerID = 1
-
-[node name="Deck" parent="." instance=ExtResource("2_cxvfi")]
 
 [node name="Dealer" type="Node2D" parent="." node_paths=PackedStringArray("Deck", "Player1", "Player2")]
 script = ExtResource("3_j3uem")
 Deck = NodePath("../Deck")
 Player1 = NodePath("../Player1")
 Player2 = NodePath("../Player2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
