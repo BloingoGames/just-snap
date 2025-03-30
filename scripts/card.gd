@@ -39,7 +39,7 @@ func _createID(newID):
 		Global.cardIDs.append(ID)
 	else:
 		_createID(ID+1) #Just brute force until ID is new lol
-	print("ID set to " + str(ID))
+	#print("ID set to " + str(ID))
 	
 func setParams(suit,pip,fancyName):
 	if not initialised:
