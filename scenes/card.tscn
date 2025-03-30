@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_e1urb"]
 
-[node name="Card" type="Node2D"]
+[node name="Card" type="Node2D" node_paths=PackedStringArray("Sprite")]
 script = ExtResource("1_e1urb")
+Sprite = NodePath("CardSprite")
 
 [node name="CardSprite" type="Sprite2D" parent="."]
