@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d3uw3hu5lhjt0"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_12sos"]
-[ext_resource type="Script" path="res://scripts/slot.gd" id="2_kjsxe"]
+[ext_resource type="Script" uid="uid://qia81nt5d51w" path="res://scripts/player.gd" id="1_12sos"]
+[ext_resource type="Script" uid="uid://cxbojhuhow8ek" path="res://scripts/slot.gd" id="2_kjsxe"]
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("Hand", "CardViewer")]
 script = ExtResource("1_12sos")

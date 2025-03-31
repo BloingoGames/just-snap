@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://3sihgdsiou2t"]
 
-[ext_resource type="Script" path="res://scripts/card.gd" id="1_e1urb"]
+[ext_resource type="Script" uid="uid://jf2ntd742phs" path="res://scripts/card.gd" id="1_e1urb"]
 
 [node name="Card" type="Node2D" node_paths=PackedStringArray("Sprite") groups=["Cards"]]
 visible = false

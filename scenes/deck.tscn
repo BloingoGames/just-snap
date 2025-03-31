@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnn5i0yjgbw7t"]
 
-[ext_resource type="Script" path="res://scripts/deck.gd" id="1_7y7xp"]
+[ext_resource type="Script" uid="uid://bk6mm4f4h4mnc" path="res://scripts/deck.gd" id="1_7y7xp"]
 [ext_resource type="Resource" uid="uid://b4qaa31h560j2" path="res://data/genericDeck.tres" id="2_p88xd"]
 
 [node name="Deck" type="Node2D"]
