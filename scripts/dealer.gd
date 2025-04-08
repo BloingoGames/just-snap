@@ -33,7 +33,11 @@ func start_turn():
 	# set all players' 'active' flags false, then current player's to true 
 	for player in players:
 		player.is_active_turn = false
+		player.update_player_ui()
+		
 	players[current_player_idx].is_active_turn = true
+	players[current_player_idx].update_player_ui() # highlight PlayerUI for active player
+	
 	print("Player " + str(players[current_player_idx].playerID) + "'s turn")
 	
 func end_turn():

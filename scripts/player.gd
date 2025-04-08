@@ -1,13 +1,32 @@
 extends Node2D
 
 signal turn_finished
+
 @export var playerID : int
+@export var playerName : String = "Player"
 @export var maxCardsInHand : int = 5
 @export var PlayerDeck : Node2D
 @export var Hand : Node2D
 @export var Table : Node2D
 
+@onready var playerUI = $PlayerUI # Player scene's UI container reference
+
+var score : int = 0
+
 var is_active_turn = false
+
+func update_player_ui():
+	var nameLabel = playerUI.get_node("NameLabel")
+	var scoreLabel = playerUI.get_node("ScoreLabel")
+
+	nameLabel.text = playerName
+	scoreLabel.text = "Score: " + str(score)
+
+	# highlight player's UI on their turn
+	if is_active_turn:
+		playerUI.modulate = Color(1, 1, 0)
+	else:
+		playerUI.modulate = Color(1, 1, 1)
 
 func showHand():
 	_moveToViewer()
@@ -20,6 +39,7 @@ func showHand():
 			defaultCard.texture = load("res://assets/default_cards/back.png")
 			slot.add_child(defaultCard) #primitive. show the back of card texture if unknown card in slot
 
+		
 func _moveToViewer():
 	for i in range(0,maxCardsInHand):
 		if PlayerDeck.get_child(i):
@@ -47,6 +67,8 @@ func _playCard():
 		emit_signal("turn_finished")
 	else:
 		print("No cards in hand!")
+		
+	update_player_ui()
 		
 func _replenishHand():
 	if PlayerDeck.get_child_count() > 0: #If deck has cards
