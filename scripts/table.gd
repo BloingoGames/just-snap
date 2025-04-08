@@ -1,5 +1,6 @@
 extends Node2D
 
+signal snap_occurred(points)
 
 func _on_slot_0_child_entered_tree(node: Node) -> void:
 	snap()
@@ -23,6 +24,8 @@ func snap():
 		if $Slot0.getCard().Suit == $Slot1.getCard().Suit or $Slot0.getCard().Pip == $Slot1.getCard().Pip:
 			var points = $Slot0.get_child_count() + $Slot1.get_child_count()
 			print("snap! "+str(points)+" points.")
+			
+			emit_signal("snap_occurred", points)
 			
 			clearTable()
 			

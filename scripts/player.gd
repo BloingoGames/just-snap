@@ -19,7 +19,7 @@ func update_player_ui():
 	var nameLabel = playerUI.get_node("NameLabel")
 	var scoreLabel = playerUI.get_node("ScoreLabel")
 
-	nameLabel.text = playerName
+	nameLabel.text = playerName + " " + str(playerID)
 	scoreLabel.text = "Score: " + str(score)
 
 	# highlight player's UI on their turn

@@ -14,7 +14,13 @@ func _ready() -> void:
 	# connect turn_finished signal to end_turn(), for each Player
 	for player in players:
 		player.turn_finished.connect(end_turn)
+	get_node("../Table").snap_occurred.connect(on_snap_occurred)
+	
 	start_turn()
+
+func on_snap_occurred(points):
+	players[current_player_idx].score += points
+	players[current_player_idx].update_player_ui()
 
 func deal(players):
 	var cards = Deck.get_children()
