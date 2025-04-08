@@ -11,8 +11,6 @@ func showHand():
 	for slot in Hand.get_children():
 		if slot.get_child(0).is_in_group("Cards"):
 			var card = slot.get_child(0)
-			card.visible = true
-			card.position = Vector2i(0,0)
 		else:
 			var defaultCard = Sprite2D.new()
 			defaultCard.texture = load("res://assets/default_cards/back.png")
@@ -21,7 +19,9 @@ func showHand():
 func _moveToViewer():
 	for i in range(0,maxCardsInHand):
 		if PlayerDeck.get_child(i):
-			PlayerDeck.get_child(i).reparent(Hand.get_node("Slot"+str(i)),false)
+			var currentCard = PlayerDeck.get_child(i)
+			currentCard.reparent(Hand.get_node("Slot"+str(i)),false)
+			
 	#Currently doesn't check if there are already cards showing. Need to make this work properly
 
 func _playCard():
@@ -40,10 +40,30 @@ func _playCard():
 		currentCard.reparent(Table.get_node(("Slot"+str(playerID))),false) #Slot corresponds to player ID
 	else:
 		print("No cards in hand!")
+		
+func _replenishHand():
+	if PlayerDeck.get_child(0):
+		var cardsInHand = _countCards()
+		PlayerDeck.get_child(0).reparent(Hand.get_node("Slot"+str(cardsInHand)),false)
+		print("Added card to slot"+str(cardsInHand))
+
+func _countCards():
+	var count = 0
+	for slot in Hand.get_children():
+		if slot.empty == false:
+			count += 1
+	return count
+
+var flipFlop = 0
 
 func _physics_process(delta):
 	var action = "ui_accept"
 	if playerID == 1:
 		action = "ui_select"
 	if Input.is_action_just_pressed(action):
-		_playCard()
+		if flipFlop == 0:
+			_playCard()
+			flipFlop = 1
+		else:
+			_replenishHand()
+			flipFlop = 0

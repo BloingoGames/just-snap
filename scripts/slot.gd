@@ -7,6 +7,8 @@ func _ready() -> void:
 
 func _on_child_entered(child):
 	empty = false
+	child.position = Vector2(0,0)
+	child.visible = true
 
 func _on_child_exited(child):
 	empty = true
