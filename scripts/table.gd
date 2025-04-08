@@ -15,6 +15,13 @@ func checkEmpty():
 	
 
 func snap():
-	var points = 0
 	if not checkEmpty():
-		print("SNAPPING")
+		if $Slot0.getCard().Suit == $Slot1.getCard().Suit or $Slot0.getCard().Pip == $Slot1.getCard().Pip:
+			var points = $Slot0.get_child_count() + $Slot1.get_child_count()
+			print("snap! "+str(points)+" points.")
+			
+			
+			return points
+	else:
+		return 0
+	
