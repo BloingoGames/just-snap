@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=6 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="PackedScene" uid="uid://d3uw3hu5lhjt0" path="res://scenes/player.tscn" id="1_78llg"]
 [ext_resource type="PackedScene" uid="uid://dnn5i0yjgbw7t" path="res://scenes/deck.tscn" id="2_cxvfi"]
 [ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
 [ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
+[ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
 
 [node name="Main" type="Node2D"]
 
@@ -32,9 +33,11 @@ script = ExtResource("4_qqaar")
 
 [node name="Slot0" type="Node2D" parent="Table"]
 position = Vector2(-50, 0)
+script = ExtResource("5_lquwl")
 
 [node name="Slot1" type="Node2D" parent="Table"]
 position = Vector2(50, 0)
+script = ExtResource("5_lquwl")
 
 [connection signal="child_entered_tree" from="Table/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]

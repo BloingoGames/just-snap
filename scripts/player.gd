@@ -9,12 +9,12 @@ func showHand():
 	_moveToViewer()
 	
 	for slot in Hand.get_children():
-		if slot.get_child(0).is_in_group("Cards"):
-			var card = slot.get_child(0)
+		if slot.getCard().is_in_group("Cards"):
+			var card = slot.getCard()
 		else:
 			var defaultCard = Sprite2D.new()
 			defaultCard.texture = load("res://assets/default_cards/back.png")
-			slot.add_child(defaultCard) #primitive. show the back of card texture if no card in slot
+			slot.add_child(defaultCard) #primitive. show the back of card texture if unknown card in slot
 
 func _moveToViewer():
 	for i in range(0,maxCardsInHand):
@@ -29,11 +29,9 @@ func _playCard():
 	var currentCard = null
 	for slot in Hand.get_children():
 		if slot.empty == false:
-			if slot.get_child(0).is_in_group("Cards"):
+			if slot.getCard().is_in_group("Cards"):
 				foundCard = true
-				currentCard = slot.get_child(0)
-		else:
-			print("No card in slot!")
+				currentCard = slot.getCard()
 	
 	if currentCard != null:
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
@@ -42,28 +40,30 @@ func _playCard():
 		print("No cards in hand!")
 		
 func _replenishHand():
-	if PlayerDeck.get_child(0):
+	if PlayerDeck.get_child_count() > 0: #If deck has cards
 		var cardsInHand = _countCards()
-		PlayerDeck.get_child(0).reparent(Hand.get_node("Slot"+str(cardsInHand)),false)
-		print("Added card to slot"+str(cardsInHand))
+		if cardsInHand < maxCardsInHand: #if cards not maxed out
+			var slot = Hand.get_node("Slot"+str(cardsInHand))
+			if slot.empty:
+				PlayerDeck.get_child(0).reparent(slot,false) #Move card on top of deck to hand
+				print("Added card to slot "+str(cardsInHand))
+			else:
+				print("Tried to add card to slot "+str(cardsInHand)+", but full!")
 
 func _countCards():
 	var count = 0
 	for slot in Hand.get_children():
 		if slot.empty == false:
-			count += 1
+			count += 1 #Count each non-empty slot
 	return count
 
-var flipFlop = 0
-
 func _physics_process(delta):
-	var action = "ui_accept"
+	var playButton = "ui_accept"
+	var replenButton = "ui_left"
 	if playerID == 1:
-		action = "ui_select"
-	if Input.is_action_just_pressed(action):
-		if flipFlop == 0:
-			_playCard()
-			flipFlop = 1
-		else:
-			_replenishHand()
-			flipFlop = 0
+		playButton = "ui_select"
+		replenButton = "ui_right" #these are all for testing only.
+	if Input.is_action_just_pressed(playButton):
+		_playCard()
+	if Input.is_action_just_pressed(replenButton):
+		_replenishHand()

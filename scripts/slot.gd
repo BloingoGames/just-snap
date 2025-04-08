@@ -12,3 +12,7 @@ func _on_child_entered(child):
 
 func _on_child_exited(child):
 	empty = true
+	
+func getCard():
+	if not empty:
+		return get_child(get_child_count()-1) #Return card on top of the pile
