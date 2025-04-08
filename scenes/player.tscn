@@ -30,3 +30,27 @@ position = Vector2(100, 0)
 script = ExtResource("2_kjsxe")
 
 [node name="PlayerDeck" type="Node2D" parent="."]
+
+[node name="PlayerUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -20.0
+offset_right = -166.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="PlayerUI"]
+layout_mode = 0
+offset_top = -3.0
+offset_right = 40.0
+offset_bottom = 20.0
+
+[node name="ScoreLabel" type="Label" parent="PlayerUI"]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 40.0
+offset_bottom = 43.0
+vertical_alignment = 2

@@ -14,7 +14,13 @@ func _ready() -> void:
 	# connect turn_finished signal to end_turn(), for each Player
 	for player in players:
 		player.turn_finished.connect(end_turn)
+	get_node("../Table").snap_occurred.connect(on_snap_occurred)
+	
 	start_turn()
+
+func on_snap_occurred(points):
+	players[current_player_idx].score += points
+	players[current_player_idx].update_player_ui()
 
 func deal(players):
 	var cards = Deck.get_children()
@@ -33,7 +39,11 @@ func start_turn():
 	# set all players' 'active' flags false, then current player's to true 
 	for player in players:
 		player.is_active_turn = false
+		player.update_player_ui()
+		
 	players[current_player_idx].is_active_turn = true
+	players[current_player_idx].update_player_ui() # highlight PlayerUI for active player
+	
 	print("Player " + str(players[current_player_idx].playerID) + "'s turn")
 	
 func end_turn():
