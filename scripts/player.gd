@@ -1,14 +1,14 @@
 extends Node2D
 @export var playerID : int
 @export var maxCardsInHand : int = 5
+@export var PlayerDeck : Node2D
 @export var Hand : Node2D
-@export var CardViewer : Node2D
 @export var Table : Node2D
 
 func showHand():
 	_moveToViewer()
 	
-	for slot in CardViewer.get_children():
+	for slot in Hand.get_children():
 		if slot.get_child(0).is_in_group("Cards"):
 			var card = slot.get_child(0)
 			card.visible = true
@@ -20,14 +20,14 @@ func showHand():
 
 func _moveToViewer():
 	for i in range(0,maxCardsInHand):
-		if Hand.get_child(i):
-			Hand.get_child(i).reparent(CardViewer.get_node("Slot"+str(i)),false)
+		if PlayerDeck.get_child(i):
+			PlayerDeck.get_child(i).reparent(Hand.get_node("Slot"+str(i)),false)
 	#Currently doesn't check if there are already cards showing. Need to make this work properly
 
 func _playCard():
 	var foundCard = false
 	var currentCard = null
-	for slot in CardViewer.get_children():
+	for slot in Hand.get_children():
 		if slot.empty == false:
 			if slot.get_child(0).is_in_group("Cards"):
 				foundCard = true

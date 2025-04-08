@@ -3,30 +3,30 @@
 [ext_resource type="Script" uid="uid://qia81nt5d51w" path="res://scripts/player.gd" id="1_12sos"]
 [ext_resource type="Script" uid="uid://cxbojhuhow8ek" path="res://scripts/slot.gd" id="2_kjsxe"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("Hand", "CardViewer")]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("PlayerDeck", "Hand")]
 script = ExtResource("1_12sos")
+PlayerDeck = NodePath("PlayerDeck")
 Hand = NodePath("Hand")
-CardViewer = NodePath("CardViewer")
 
-[node name="CardViewer" type="Node2D" parent="."]
+[node name="Hand" type="Node2D" parent="."]
 
-[node name="Slot0" type="Node2D" parent="CardViewer"]
+[node name="Slot0" type="Node2D" parent="Hand"]
 position = Vector2(-200, 0)
 script = ExtResource("2_kjsxe")
 
-[node name="Slot1" type="Node2D" parent="CardViewer"]
+[node name="Slot1" type="Node2D" parent="Hand"]
 position = Vector2(-100, 0)
 script = ExtResource("2_kjsxe")
 
-[node name="Slot2" type="Node2D" parent="CardViewer"]
+[node name="Slot2" type="Node2D" parent="Hand"]
 script = ExtResource("2_kjsxe")
 
-[node name="Slot3" type="Node2D" parent="CardViewer"]
+[node name="Slot3" type="Node2D" parent="Hand"]
 position = Vector2(100, 0)
 script = ExtResource("2_kjsxe")
 
-[node name="Slot4" type="Node2D" parent="CardViewer"]
+[node name="Slot4" type="Node2D" parent="Hand"]
 position = Vector2(200, 0)
 script = ExtResource("2_kjsxe")
 
-[node name="Hand" type="Node2D" parent="."]
+[node name="PlayerDeck" type="Node2D" parent="."]
