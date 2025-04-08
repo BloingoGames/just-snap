@@ -11,22 +11,22 @@ Hand = NodePath("Hand")
 [node name="Hand" type="Node2D" parent="."]
 
 [node name="Slot0" type="Node2D" parent="Hand"]
-position = Vector2(-200, 0)
+position = Vector2(-100, 0)
 script = ExtResource("2_kjsxe")
 
 [node name="Slot1" type="Node2D" parent="Hand"]
-position = Vector2(-100, 0)
+position = Vector2(-50, 0)
 script = ExtResource("2_kjsxe")
 
 [node name="Slot2" type="Node2D" parent="Hand"]
 script = ExtResource("2_kjsxe")
 
 [node name="Slot3" type="Node2D" parent="Hand"]
-position = Vector2(100, 0)
+position = Vector2(50, 0)
 script = ExtResource("2_kjsxe")
 
 [node name="Slot4" type="Node2D" parent="Hand"]
-position = Vector2(200, 0)
+position = Vector2(100, 0)
 script = ExtResource("2_kjsxe")
 
 [node name="PlayerDeck" type="Node2D" parent="."]

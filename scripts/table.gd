@@ -13,6 +13,10 @@ func checkEmpty():
 	else:
 		return true
 	
+func clearTable():
+	for slot in get_children():
+		for card in slot.get_children():
+			card.queue_free()
 
 func snap():
 	if not checkEmpty():
@@ -20,6 +24,7 @@ func snap():
 			var points = $Slot0.get_child_count() + $Slot1.get_child_count()
 			print("snap! "+str(points)+" points.")
 			
+			clearTable()
 			
 			return points
 	else:
