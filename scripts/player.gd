@@ -11,6 +11,23 @@ signal turn_finished
 
 @onready var playerUI = $PlayerUI # Player scene's UI container reference
 
+var playerControls = { #Keys are player ID. Dict within player ID is that player's control scheme
+	0: {
+		49: "Card 0",
+		50: "Card 1",
+		51: "Card 2",
+		52: "Card 3",
+		53: "Card 4",
+	},
+	1:{
+		54: "Card 0",
+		55: "Card 1",
+		56: "Card 2",
+		57: "Card 3",
+		48: "Card 4",
+	}
+}
+
 var score : int = 0
 
 var is_active_turn = false
@@ -46,20 +63,18 @@ func _moveToViewer():
 			var currentCard = PlayerDeck.get_child(i)
 			currentCard.reparent(Hand.get_node("Slot"+str(i)),false)
 
-func _playCard():
+func _playCard(card : int):
 	# only active player allowed
 	if not is_active_turn:
 		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
 		return
 		
-	var foundCard = false
+	var slot = Hand.get_child(card)
+	
 	var currentCard = null
-	for slot in Hand.get_children():
-		if slot.get_child_count() > 0:
-			if slot.getCard().is_in_group("Cards"):
-				foundCard = true
-				currentCard = slot.getCard()
-				break
+	if slot.get_child_count() > 0:
+		if slot.getCard().is_in_group("Cards"):
+			currentCard = slot.getCard()
 	
 	if currentCard != null:
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
@@ -87,14 +102,28 @@ func _countCards():
 		if slot.get_child_count() > 0:
 			count += 1 #Count each non-empty slot
 	return count
-
+	
+func _input(event) -> void:
+	if is_active_turn:
+		if event is InputEventKey and event.pressed: #if detected input is a keypress and *pressed* not *released*.
+			var pressedKey = event["keycode"]
+			if pressedKey in playerControls[playerID]: #check if it's in the player's controls.
+				_processControls(playerControls[playerID][pressedKey])
+					
+	
+func _processControls(action : String):
+	if action.begins_with("Card"):
+		_playCard(int(action.substr(4)))
+	
 func _physics_process(delta):
-	var playButton = "ui_accept"
-	var replenButton = "ui_left"
-	if playerID == 1:
-		playButton = "ui_select"
-		replenButton = "ui_right" #these are all for testing only.
-	if Input.is_action_just_pressed(playButton):
-		_playCard()
-	if Input.is_action_just_pressed(replenButton):
-		_replenishHand()
+	pass
+	#
+	#var playButton = "ui_accept"
+	#var replenButton = "ui_left"
+	#if playerID == 1:
+		#playButton = "ui_select"
+		#replenButton = "ui_right" #these are all for testing only.
+	#if Input.is_action_just_pressed(playButton):
+		#_playCard()
+	#if Input.is_action_just_pressed(replenButton):
+		#_replenishHand()
