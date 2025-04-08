@@ -21,8 +21,6 @@ func _moveToViewer():
 		if PlayerDeck.get_child(i):
 			var currentCard = PlayerDeck.get_child(i)
 			currentCard.reparent(Hand.get_node("Slot"+str(i)),false)
-			
-	#Currently doesn't check if there are already cards showing. Need to make this work properly
 
 func _playCard():
 	var foundCard = false
