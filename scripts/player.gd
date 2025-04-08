@@ -1,9 +1,13 @@
 extends Node2D
+
+signal turn_finished
 @export var playerID : int
 @export var maxCardsInHand : int = 5
 @export var PlayerDeck : Node2D
 @export var Hand : Node2D
 @export var Table : Node2D
+
+var is_active_turn = false
 
 func showHand():
 	_moveToViewer()
@@ -23,35 +27,42 @@ func _moveToViewer():
 			currentCard.reparent(Hand.get_node("Slot"+str(i)),false)
 
 func _playCard():
+	# only active player allowed
+	if not is_active_turn:
+		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
+		return
+		
 	var foundCard = false
 	var currentCard = null
 	for slot in Hand.get_children():
-		if slot.empty == false:
+		if slot.get_child_count() > 0:
 			if slot.getCard().is_in_group("Cards"):
 				foundCard = true
 				currentCard = slot.getCard()
+				break
 	
 	if currentCard != null:
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
 		currentCard.reparent(Table.get_node(("Slot"+str(playerID))),false) #Slot corresponds to player ID
+		emit_signal("turn_finished")
 	else:
 		print("No cards in hand!")
 		
 func _replenishHand():
 	if PlayerDeck.get_child_count() > 0: #If deck has cards
-		var cardsInHand = _countCards()
-		if cardsInHand < maxCardsInHand: #if cards not maxed out
-			var slot = Hand.get_node("Slot"+str(cardsInHand))
-			if slot.empty:
+		# find first empty slot (iterating all) and replenish one card
+		for slot in Hand.get_children():
+			if slot.get_child_count() == 0:
 				PlayerDeck.get_child(0).reparent(slot,false) #Move card on top of deck to hand
-				print("Added card to slot "+str(cardsInHand))
-			else:
-				print("Tried to add card to slot "+str(cardsInHand)+", but full!")
+				print("Added card to slot "+str(slot.name))
+				return # just the one please
+		
+		print("No free slots found")
 
 func _countCards():
 	var count = 0
 	for slot in Hand.get_children():
-		if slot.empty == false:
+		if slot.get_child_count() > 0:
 			count += 1 #Count each non-empty slot
 	return count
 

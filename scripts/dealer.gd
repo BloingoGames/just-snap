@@ -4,8 +4,17 @@ extends Node2D
 @export var Player1 : Node2D #For now just declaring each player in inspector. ->
 @export var Player2 : Node2D
 
+var current_player_idx = 0
+var players = []
+
 func _ready() -> void:
-	deal([Player1,Player2])
+	players = [Player1, Player2]
+	deal(players)
+	
+	# connect turn_finished signal to end_turn(), for each Player
+	for player in players:
+		player.turn_finished.connect(end_turn)
+	start_turn()
 
 func deal(players):
 	var cards = Deck.get_children()
@@ -19,3 +28,14 @@ func deal(players):
 	
 	Player1.showHand()
 	Player2.showHand()
+
+func start_turn():
+	# set all players' 'active' flags false, then current player's to true 
+	for player in players:
+		player.is_active_turn = false
+	players[current_player_idx].is_active_turn = true
+	print("Player " + str(players[current_player_idx].playerID) + "'s turn")
+	
+func end_turn():
+	current_player_idx = (current_player_idx + 1) % players.size()
+	start_turn()
