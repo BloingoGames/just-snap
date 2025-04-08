@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://blskacp21j201"]
+
+[ext_resource type="Script" uid="uid://d2ewfjybxkkeh" path="res://rhythm_bar.gd" id="1_veoks"]
+[ext_resource type="Texture2D" uid="uid://b4mgr6yof7hjr" path="res://assets/SuitHearts.svg" id="2_koas0"]
+[ext_resource type="Texture2D" uid="uid://cufaje34rn7sl" path="res://assets/SuitClubs.svg.png" id="3_mi1kc"]
+[ext_resource type="Texture2D" uid="uid://jbkgayg3w6q" path="res://assets/SuitDiamonds.svg.png" id="4_a5nmo"]
+[ext_resource type="Texture2D" uid="uid://dpxqcntgfhbci" path="res://assets/Card_spade.svg.png" id="5_dw2pp"]
+
+[node name="RhythmBar" type="Node2D"]
+script = ExtResource("1_veoks")
+
+[node name="North" type="Sprite2D" parent="."]
+position = Vector2(1, -45)
+scale = Vector2(0.120833, 0.103923)
+texture = ExtResource("2_koas0")
+
+[node name="South" type="Sprite2D" parent="."]
+position = Vector2(-2, 45)
+scale = Vector2(0.0375, 0.0401557)
+texture = ExtResource("4_a5nmo")
+
+[node name="West" type="Sprite2D" parent="."]
+position = Vector2(-56, -0.999999)
+scale = Vector2(0.019898, 0.0170352)
+texture = ExtResource("5_dw2pp")
+
+[node name="East" type="Sprite2D" parent="."]
+position = Vector2(62, -1)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("3_mi1kc")
