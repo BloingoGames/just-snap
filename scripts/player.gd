@@ -32,6 +32,22 @@ var score : int = 0
 
 var is_active_turn = false
 
+func is_out() -> bool:
+	# check player's deck and hand for empty - if so, their turn is skipped
+	var deckEmpty = (PlayerDeck.get_child_count() == 0)
+	var handEmpty = true
+	
+	for slot in Hand.get_children():
+		if (slot.get_child_count() > 0) and slot.getCard().is_in_group("Cards"):
+			handEmpty = false
+			break
+		
+	if (deckEmpty and handEmpty):
+		print("player " + str(playerID) + " is dead, their turn is skipped")
+		return true
+	else:
+		return false
+		
 func update_player_ui():
 	var nameLabel = playerUI.get_node("NameLabel")
 	var scoreLabel = playerUI.get_node("ScoreLabel")
