@@ -84,7 +84,9 @@ func _playCard(card : int):
 	
 	if currentCard != null:
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
-		currentCard.reparent(Table.get_node(("Slot"+str(playerID))),false) #Slot corresponds to player ID
+		var targetSlot = Table.get_node("Slot"+str(playerID))
+		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
+		create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(currentCard, "position", targetSlot.position, 0.1)
 		
 		# automatically replenish the slot last placed from
 		# (if there are still cards)

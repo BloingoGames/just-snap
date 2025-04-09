@@ -50,11 +50,11 @@ zoom = Vector2(2, 2)
 script = ExtResource("4_qqaar")
 
 [node name="Slot0" type="Node2D" parent="Table"]
-position = Vector2(-50, 0)
+position = Vector2(-25, 0)
 script = ExtResource("5_lquwl")
 
 [node name="Slot1" type="Node2D" parent="Table"]
-position = Vector2(50, 0)
+position = Vector2(25, 0)
 script = ExtResource("5_lquwl")
 
 [connection signal="child_entered_tree" from="Table/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
