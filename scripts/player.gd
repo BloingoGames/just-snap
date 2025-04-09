@@ -8,6 +8,7 @@ signal turn_finished
 @export var PlayerDeck : Node2D
 @export var Hand : Node2D
 @export var Table : Node2D
+@export var flipped = false
 
 @onready var playerUI = $PlayerUI # Player scene's UI container reference
 
@@ -31,6 +32,11 @@ var playerControls = { #Keys are player ID. Dict within player ID is that player
 var score : int = 0
 
 var is_active_turn = false
+
+func _ready() -> void:
+	if flipped: #Rotate player at top of screen's cards for animation to work
+		Hand.rotation_degrees = 180
+	$AnimationPlayer.play("show_cards")
 
 func update_player_ui():
 	var nameLabel = playerUI.get_node("NameLabel")

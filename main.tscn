@@ -34,6 +34,7 @@ Table = NodePath("../Table")
 position = Vector2(0, -120)
 playerID = 1
 Table = NodePath("../Table")
+flipped = true
 
 [node name="Dealer" type="Node2D" parent="." node_paths=PackedStringArray("Deck", "Player1", "Player2")]
 script = ExtResource("3_j3uem")
