@@ -69,6 +69,10 @@ func _moveToViewer():
 			var currentCard = PlayerDeck.get_child(i)
 			currentCard.reparent(Hand.get_node("Slot"+str(i)),false)
 
+func _animateCard(card,targetPos):
+	create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(card, "position", targetPos, 0.12)
+		
+
 func _playCard(card : int):
 	# only active player allowed
 	if not is_active_turn:
@@ -86,13 +90,14 @@ func _playCard(card : int):
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
 		var targetSlot = Table.get_node("Slot"+str(playerID))
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
-		create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(currentCard, "position", targetSlot.position, 0.1)
-		
+		_animateCard(currentCard,targetSlot.position)
 		# automatically replenish the slot last placed from
 		# (if there are still cards)
 		if PlayerDeck.get_child_count() > 0:
 			var newCard = PlayerDeck.get_child(0) # pull one from the top of the deck
 			newCard.reparent(slot, false)
+			newCard.position.y += 50
+			_animateCard(newCard,Vector2(newCard.position.x,newCard.position.y - 50))
 			print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")
