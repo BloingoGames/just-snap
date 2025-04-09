@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3uw3hu5lhjt0"]
+[gd_scene load_steps=9 format=3 uid="uid://d3uw3hu5lhjt0"]
 
 [ext_resource type="Script" uid="uid://qia81nt5d51w" path="res://scripts/player.gd" id="1_12sos"]
 [ext_resource type="Script" uid="uid://cxbojhuhow8ek" path="res://scripts/slot.gd" id="2_kjsxe"]
 [ext_resource type="FontFile" uid="uid://dq8bxm0lh8afv" path="res://assets/monogram.ttf" id="3_2ho2h"]
+[ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="3_dqkch"]
 
 [sub_resource type="Animation" id="Animation_dqkch"]
 length = 0.001
@@ -403,16 +404,23 @@ offset_bottom = 10.0
 grow_vertical = 2
 
 [node name="NameLabel" type="Label" parent="PlayerUI"]
+material = ExtResource("3_dqkch")
 layout_mode = 0
-offset_top = 16.0
+offset_top = 4.0
 offset_right = 40.0
-offset_bottom = 39.0
+offset_bottom = 106.0
+scale = Vector2(0.25, 0.25)
 theme_override_fonts/font = ExtResource("3_2ho2h")
+theme_override_font_sizes/font_size = 64
+vertical_alignment = 2
 
 [node name="ScoreLabel" type="Label" parent="PlayerUI"]
+material = ExtResource("3_dqkch")
 layout_mode = 0
-offset_top = 20.0
+offset_top = 14.0
 offset_right = 40.0
-offset_bottom = 43.0
+offset_bottom = 116.0
+scale = Vector2(0.25, 0.25)
 theme_override_fonts/font = ExtResource("3_2ho2h")
+theme_override_font_sizes/font_size = 64
 vertical_alignment = 2
