@@ -25,9 +25,9 @@ func clearTable():
 			anim = snap_animation(card)
 	
 	await anim.finished
-	print("hi")
 	for card in cardsToClear:
-		card.queue_free()
+		if card:
+			card.queue_free()
 
 
 func snap_animation(node):
