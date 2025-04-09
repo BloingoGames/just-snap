@@ -126,7 +126,11 @@ func _playCard(card : int):
 		print("No cards in slot!")
 		
 	update_player_ui()
+	
+func _playCardSpecial(card : int):
+	print("shift modifier active on: " + str(card))
 
+	
 func _countCards():
 	var count = 0
 	for slot in Hand.get_children():
@@ -151,7 +155,7 @@ func _processControls(action : String):
 	if action.begins_with("Card"):
 		_playCard(int(action.substr(4)))
 	if action.begins_with("Shift_Card"):
-		print("shift modifier active on: " + action.substr(11))
+		_playCardSpecial(int(action.substr(11)))
 	
 func _physics_process(delta):
 	pass
