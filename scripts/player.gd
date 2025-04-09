@@ -138,13 +138,20 @@ func _input(event) -> void:
 	if is_active_turn:
 		if event is InputEventKey and event.pressed: #if detected input is a keypress and *pressed* not *released*.
 			var pressedKey = event["keycode"]
-			if pressedKey in playerControls[playerID]: #check if it's in the player's controls.
-				_processControls(playerControls[playerID][pressedKey])
-					
-	
+			if pressedKey in playerControls[playerID]: #check if it's in the player's controls.			
+				var baseAction = playerControls[playerID][pressedKey]
+				var action = baseAction
+				# check shift key held
+				if Input.is_key_pressed(KEY_SHIFT):
+					action = "Shift_" + baseAction
+				_processControls(action)
+				
+				
 func _processControls(action : String):
 	if action.begins_with("Card"):
 		_playCard(int(action.substr(4)))
+	if action.begins_with("Shift_Card"):
+		print("shift modifier active on: " + action.substr(11))
 	
 func _physics_process(delta):
 	pass
