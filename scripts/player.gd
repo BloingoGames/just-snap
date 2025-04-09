@@ -81,7 +81,7 @@ func _playCard(card : int):
 		currentCard.reparent(Table.get_node(("Slot"+str(playerID))),false) #Slot corresponds to player ID
 		emit_signal("turn_finished")
 	else:
-		print("No cards in hand!")
+		print("No cards in slot!")
 		
 	update_player_ui()
 		
