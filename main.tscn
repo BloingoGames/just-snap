@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://dhcnvcjcqfttt" path="res://assets/background.png" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://d3uw3hu5lhjt0" path="res://scenes/player.tscn" id="1_78llg"]
 [ext_resource type="PackedScene" uid="uid://dnn5i0yjgbw7t" path="res://scenes/deck.tscn" id="2_cxvfi"]
-[ext_resource type="Script" uid="uid://bptniabsfg2p7" path="res://scripts/player_signals.gd" id="3_272bh"]
-[ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
-[ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
-[ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
+[ext_resource type="Script" path="res://scripts/player_signals.gd" id="3_272bh"]
+[ext_resource type="Script" path="res://scripts/dealer.gd" id="3_j3uem"]
+[ext_resource type="Script" path="res://scripts/table.gd" id="4_qqaar"]
+[ext_resource type="Script" path="res://scripts/table_slot.gd" id="5_lquwl"]
 
 [node name="Main" type="Node2D"]
 
