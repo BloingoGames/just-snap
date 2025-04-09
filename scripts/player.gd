@@ -79,6 +79,14 @@ func _playCard(card : int):
 	if currentCard != null:
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
 		currentCard.reparent(Table.get_node(("Slot"+str(playerID))),false) #Slot corresponds to player ID
+		
+		# automatically replenish the slot last placed from
+		# (if there are still cards)
+		if PlayerDeck.get_child_count() > 0:
+			var newCard = PlayerDeck.get_child(0) # pull one from the top of the deck
+			newCard.reparent(slot, false)
+			print("Slot " + str(card) + " replenished automatically")
+		
 		emit_signal("turn_finished")
 	else:
 		print("No cards in slot!")
