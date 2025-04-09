@@ -1,6 +1,7 @@
 extends Node2D
 
 signal turn_finished
+signal card_animation_finished
 
 @export var playerID : int
 @export var playerName : String = "Player"
@@ -35,8 +36,9 @@ var is_active_turn = false
 
 func _ready() -> void:
 	if flipped: #Rotate player at top of screen's cards for animation to work
-		Hand.rotation_degrees = 180
-	$AnimationPlayer.play("show_cards")
+		$AnimationPlayer.play("show_cards_flipped")
+	else:
+		$AnimationPlayer.play("show_cards")
 
 func update_player_ui():
 	var nameLabel = playerUI.get_node("NameLabel")
@@ -69,8 +71,11 @@ func _moveToViewer():
 			var currentCard = PlayerDeck.get_child(i)
 			currentCard.reparent(Hand.get_node("Slot"+str(i)),false)
 
-func _animateCard(card,targetPos):
-	create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(card, "position", targetPos, 0.12)
+func _animateCard(card,targetPos,sig):
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).tween_property(card, "position", targetPos, 0.12)
+	if sig:
+		await tween.finished
+		emit_signal("card_animation_finished")
 		
 
 func _playCard(card : int):
@@ -90,14 +95,14 @@ func _playCard(card : int):
 		print("Player "+str(playerID)+" plays "+ currentCard.Name)
 		var targetSlot = Table.get_node("Slot"+str(playerID))
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
-		_animateCard(currentCard,targetSlot.position)
+		_animateCard(currentCard,targetSlot.position,true)
 		# automatically replenish the slot last placed from
 		# (if there are still cards)
 		if PlayerDeck.get_child_count() > 0:
 			var newCard = PlayerDeck.get_child(0) # pull one from the top of the deck
 			newCard.reparent(slot, false)
 			newCard.position.y += 50
-			_animateCard(newCard,Vector2(newCard.position.x,newCard.position.y - 50))
+			_animateCard(newCard,Vector2(newCard.position.x,newCard.position.y - 50),false)
 			print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")

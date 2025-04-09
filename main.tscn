@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=8 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Texture2D" uid="uid://dhcnvcjcqfttt" path="res://assets/background.png" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://d3uw3hu5lhjt0" path="res://scenes/player.tscn" id="1_78llg"]
 [ext_resource type="PackedScene" uid="uid://dnn5i0yjgbw7t" path="res://scenes/deck.tscn" id="2_cxvfi"]
+[ext_resource type="Script" uid="uid://bptniabsfg2p7" path="res://scripts/player_signals.gd" id="3_272bh"]
 [ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
 [ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
 [ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
@@ -26,6 +27,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Deck" parent="." instance=ExtResource("2_cxvfi")]
 
+[node name="PlayerSignals" type="Node2D" parent="."]
+script = ExtResource("3_272bh")
+
 [node name="Player1" parent="." node_paths=PackedStringArray("Table") instance=ExtResource("1_78llg")]
 position = Vector2(0, 120)
 Table = NodePath("../Table")
@@ -46,8 +50,9 @@ Player2 = NodePath("../Player2")
 position = Vector2(-1, 0)
 zoom = Vector2(2, 2)
 
-[node name="Table" type="Node2D" parent="."]
+[node name="Table" type="Node2D" parent="." node_paths=PackedStringArray("PlayerSignals")]
 script = ExtResource("4_qqaar")
+PlayerSignals = NodePath("../PlayerSignals")
 
 [node name="Slot0" type="Node2D" parent="Table"]
 position = Vector2(-25, 0)
@@ -57,5 +62,7 @@ script = ExtResource("5_lquwl")
 position = Vector2(25, 0)
 script = ExtResource("5_lquwl")
 
+[connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
+[connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
 [connection signal="child_entered_tree" from="Table/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]

@@ -2,6 +2,8 @@ extends Node2D
 
 signal snap_occurred(points)
 
+@export var PlayerSignals : Node2D
+
 func _on_slot_0_child_entered_tree(node: Node) -> void:
 	snap()
 
@@ -27,9 +29,9 @@ func snap():
 			
 			emit_signal("snap_occurred", points)
 			
+			await PlayerSignals.card_animation_finished
 			clearTable()
 			
 			return points
 	else:
 		return 0
-	
