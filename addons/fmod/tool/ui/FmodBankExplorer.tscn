@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://nr38urn226al"]
 
 [ext_resource type="Script" uid="uid://b5xgbibc3amtk" path="res://addons/fmod/tool/ui/FmodBankExplorer.gd" id="1_ekqus"]
-[ext_resource type="Script" uid="uid://c367gjxw42dhr" path="res://addons/fmod/tool/ui/EventPlayControls.gd" id="2_mleop"]
+[ext_resource type="Script" uid="uid://vgmq7hfrbddw" path="res://addons/fmod/tool/ui/EventPlayControls.gd" id="2_mleop"]
 [ext_resource type="PackedScene" uid="uid://cppeyr1ke5wre" path="res://addons/fmod/tool/ui/EventParametersDisplay.tscn" id="2_uoyg8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wrr0m"]
