@@ -100,17 +100,6 @@ func _playCard(card : int):
 		print("No cards in slot!")
 		
 	update_player_ui()
-		
-func _replenishHand():
-	if PlayerDeck.get_child_count() > 0: #If deck has cards
-		# find first empty slot (iterating all) and replenish one card
-		for slot in Hand.get_children():
-			if slot.get_child_count() == 0:
-				PlayerDeck.get_child(0).reparent(slot,false) #Move card on top of deck to hand
-				print("Added card to slot "+str(slot.name))
-				return # just the one please
-		
-		print("No free slots found")
 
 func _countCards():
 	var count = 0
@@ -133,13 +122,3 @@ func _processControls(action : String):
 	
 func _physics_process(delta):
 	pass
-	#
-	#var playButton = "ui_accept"
-	#var replenButton = "ui_left"
-	#if playerID == 1:
-		#playButton = "ui_select"
-		#replenButton = "ui_right" #these are all for testing only.
-	#if Input.is_action_just_pressed(playButton):
-		#_playCard()
-	#if Input.is_action_just_pressed(replenButton):
-		#_replenishHand()
