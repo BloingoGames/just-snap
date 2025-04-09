@@ -17,9 +17,25 @@ func checkEmpty():
 		return true
 	
 func clearTable():
+	var anim
+	var cardsToClear = []
 	for slot in get_children():
 		for card in slot.get_children():
-			card.queue_free()
+			cardsToClear.append(card)
+			anim = snap_animation(card)
+	
+	await anim.finished
+	print("hi")
+	for card in cardsToClear:
+		card.queue_free()
+
+
+func snap_animation(node):
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN_OUT) \
+	.tween_property(node, "scale", Vector2(1.2, 1.2), 0.3)
+	
+	return tween
 
 func snap():
 	if not checkEmpty():
