@@ -99,6 +99,10 @@ func _playCard(card : int, is_special : bool = false):
 	if not is_active_turn:
 		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
 		return
+	
+	if Table.snapping:
+		print("Table still snapping previous cards.")
+		return
 		
 	var slot = Hand.get_child(card)
 	
