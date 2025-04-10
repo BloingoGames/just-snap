@@ -53,9 +53,10 @@ Player2 = NodePath("../Player2")
 position = Vector2(-1, 0)
 zoom = Vector2(2, 2)
 
-[node name="Table" type="Node2D" parent="." node_paths=PackedStringArray("PlayerSignals")]
+[node name="Table" type="Node2D" parent="." node_paths=PackedStringArray("PlayerSignals", "SnapSlots")]
 script = ExtResource("4_qqaar")
 PlayerSignals = NodePath("../PlayerSignals")
+SnapSlots = NodePath("SnapSlots")
 
 [node name="SlotSpecial" type="Node2D" parent="Table"]
 position = Vector2(-75, 0)
@@ -73,16 +74,18 @@ grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("9_kek77")
 
-[node name="Slot0" type="Node2D" parent="Table"]
+[node name="SnapSlots" type="Node2D" parent="Table"]
+
+[node name="Slot0" type="Node2D" parent="Table/SnapSlots"]
 position = Vector2(-25, 0)
 script = ExtResource("5_lquwl")
 
-[node name="Slot1" type="Node2D" parent="Table"]
+[node name="Slot1" type="Node2D" parent="Table/SnapSlots"]
 position = Vector2(25, 0)
 script = ExtResource("5_lquwl")
 
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
 [connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
-[connection signal="child_entered_tree" from="Table/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
-[connection signal="child_entered_tree" from="Table/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]
+[connection signal="child_entered_tree" from="Table/SnapSlots/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
+[connection signal="child_entered_tree" from="Table/SnapSlots/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]

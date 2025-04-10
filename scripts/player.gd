@@ -109,7 +109,7 @@ func _playCard(card : int, is_special : bool = false):
 	
 	if currentCard != null:
 		# 'targetSlot' target depends on whether card placed as special
-		var targetSlot = Table.get_node("Slot"+str(playerID))
+		var targetSlot = Table.get_node("SnapSlots/Slot"+str(playerID))
 		if is_special:
 			print("Player "+str(playerID)+" plays "+ currentCard.Name + " as Bloingo!")
 			targetSlot = Table.get_node("SlotSpecial")
