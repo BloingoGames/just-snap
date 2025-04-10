@@ -94,7 +94,7 @@ func _animateCard(card,targetPos,sig):
 		emit_signal("card_animation_finished")
 		
 
-func _playCard(card : int):
+func _playCard(card : int, is_special : bool = false):
 	# only active player allowed
 	if not is_active_turn:
 		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
@@ -108,8 +108,12 @@ func _playCard(card : int):
 			currentCard = slot.getCard()
 	
 	if currentCard != null:
-		print("Player "+str(playerID)+" plays "+ currentCard.Name)
 		var targetSlot = Table.get_node("Slot"+str(playerID))
+		if is_special:
+			print("Player "+str(playerID)+" plays "+ currentCard.Name + " as Bloingo!")
+			targetSlot = Table.get_node("Slot"+str(playerID))
+		else:
+			print("Player "+str(playerID)+" plays "+ currentCard.Name)
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
 		_animateCard(currentCard,targetSlot.position,true)
 		# automatically replenish the slot last placed from
@@ -153,9 +157,9 @@ func _input(event) -> void:
 				
 func _processControls(action : String):
 	if action.begins_with("Card"):
-		_playCard(int(action.substr(4)))
+		_playCard(int(action.substr(4)), false)
 	if action.begins_with("Shift_Card"):
-		_playCardSpecial(int(action.substr(11)))
+		_playCard(int(action.substr(11)), true)
 	
 func _physics_process(delta):
 	pass
