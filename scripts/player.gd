@@ -108,14 +108,17 @@ func _playCard(card : int, is_special : bool = false):
 			currentCard = slot.getCard()
 	
 	if currentCard != null:
+		# 'targetSlot' target depends on whether card placed as special
 		var targetSlot = Table.get_node("Slot"+str(playerID))
 		if is_special:
 			print("Player "+str(playerID)+" plays "+ currentCard.Name + " as Bloingo!")
-			targetSlot = Table.get_node("Slot"+str(playerID))
+			targetSlot = Table.get_node("SlotSpecial")
 		else:
 			print("Player "+str(playerID)+" plays "+ currentCard.Name)
+		
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
 		_animateCard(currentCard,targetSlot.position,true)
+		
 		# automatically replenish the slot last placed from
 		# (if there are still cards)
 		if PlayerDeck.get_child_count() > 0:
@@ -123,11 +126,11 @@ func _playCard(card : int, is_special : bool = false):
 			newCard.reparent(slot, false)
 			newCard.position.y += 50
 			_animateCard(newCard,Vector2(newCard.position.x,newCard.position.y - 50),false)
-			print("Slot " + str(card) + " replenished automatically")
+			#print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")
 	else:
-		print("No cards in slot!")
+		print("Player "+str(playerID)+": No cards in that slot!")
 		
 	update_player_ui()
 	

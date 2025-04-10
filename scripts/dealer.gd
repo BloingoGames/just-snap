@@ -65,7 +65,7 @@ func start_turn():
 	players[current_player_idx].is_active_turn = true
 	players[current_player_idx].update_player_ui() # highlight PlayerUI for active player
 	
-	print("Player " + str(players[current_player_idx].playerID) + "'s turn")
+	print("\nPlayer " + str(players[current_player_idx].playerID) + "'s turn:")
 	
 func end_turn():
 	current_player_idx = (current_player_idx + 1) % players.size()

@@ -19,10 +19,14 @@ func checkEmpty():
 func clearTable():
 	var anim
 	var cardsToClear = []
+	
 	for slot in get_children():
-		for card in slot.get_children():
-			cardsToClear.append(card)
-			anim = snap_animation(card)
+		if slot != self.get_node("SlotSpecial"):
+			for card in slot.get_children():
+				if not card.blocking:
+					cardsToClear.append(card)
+					anim = snap_animation(card)
+			
 	
 	await anim.finished
 	for card in cardsToClear:

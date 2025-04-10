@@ -56,6 +56,10 @@ zoom = Vector2(2, 2)
 script = ExtResource("4_qqaar")
 PlayerSignals = NodePath("../PlayerSignals")
 
+[node name="SlotSpecial" type="Node2D" parent="Table"]
+position = Vector2(-75, 0)
+script = ExtResource("5_lquwl")
+
 [node name="Slot0" type="Node2D" parent="Table"]
 position = Vector2(-25, 0)
 script = ExtResource("5_lquwl")
@@ -66,5 +70,6 @@ script = ExtResource("5_lquwl")
 
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
+[connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]
