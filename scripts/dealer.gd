@@ -36,7 +36,28 @@ func deal(players):
 	Player2.showHand()
 
 func start_turn():
-	# set all players' 'active' flags false, then current player's to true 
+	# Rebuild list of players still in the game for turn-cycling, 
+	# by checking their 'is_out()' status based on each player's remaining deck and hand
+	var activePlayers = []
+	for player in players:
+		if player.is_out() == false:
+			activePlayers.append(player)
+			
+	# End condition is met if a single player remains in play (can't play with youself!) 
+	if activePlayers.size() <= 1:
+		end_game()
+		return
+		
+	# the list of players can change in size -
+	# ensure that the current player index is still within range
+	current_player_idx = current_player_idx % players.size()
+	# skip turn if palyer is dead
+	if players[current_player_idx].is_out():
+		print("Player " + str(players[current_player_idx].playerID) +" is out - skipping their turn")
+		end_turn()
+		return
+	
+	# Set all players' 'active' flags false, then current player's to true 
 	for player in players:
 		player.is_active_turn = false
 		player.update_player_ui()
@@ -49,3 +70,6 @@ func start_turn():
 func end_turn():
 	current_player_idx = (current_player_idx + 1) % players.size()
 	start_turn()
+	
+func end_game():
+	print("game over")
