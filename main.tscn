@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=13 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
 [ext_resource type="Texture2D" uid="uid://dhcnvcjcqfttt" path="res://assets/background.png" id="1_7mycd"]
@@ -8,6 +8,44 @@
 [ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
 [ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
 [ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
+[ext_resource type="Theme" uid="uid://btykdtllk2gco" path="res://assets/table/slot.tres" id="9_kek77"]
+
+[sub_resource type="Animation" id="Animation_kek77"]
+resource_name = "snap"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SnapSlots:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(2.14355, 2.14355),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2)]
+}
+
+[sub_resource type="Animation" id="Animation_4c57u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SnapSlots:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_efxa6"]
+_data = {
+&"RESET": SubResource("Animation_4c57u"),
+&"snap": SubResource("Animation_kek77")
+}
 
 [node name="Main" type="Node2D"]
 
@@ -52,19 +90,46 @@ Player2 = NodePath("../Player2")
 position = Vector2(-1, 0)
 zoom = Vector2(2, 2)
 
-[node name="Table" type="Node2D" parent="." node_paths=PackedStringArray("PlayerSignals")]
+[node name="Table" type="Node2D" parent="." node_paths=PackedStringArray("PlayerSignals", "SnapSlots", "SnapAnimator")]
 script = ExtResource("4_qqaar")
 PlayerSignals = NodePath("../PlayerSignals")
+SnapSlots = NodePath("SnapSlots")
+SnapAnimator = NodePath("SnapAnimator")
 
-[node name="Slot0" type="Node2D" parent="Table"]
+[node name="SnapAnimator" type="AnimationPlayer" parent="Table"]
+libraries = {
+&"": SubResource("AnimationLibrary_efxa6")
+}
+
+[node name="SlotSpecial" type="Node2D" parent="Table"]
+position = Vector2(-75, 0)
+script = ExtResource("5_lquwl")
+
+[node name="SlotSpecialPanel" type="Panel" parent="Table/SlotSpecial"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_right = -75.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("9_kek77")
+
+[node name="SnapSlots" type="Node2D" parent="Table"]
+material = ExtResource("1_5vw27")
+
+[node name="Slot0" type="Node2D" parent="Table/SnapSlots"]
 position = Vector2(-25, 0)
 script = ExtResource("5_lquwl")
 
-[node name="Slot1" type="Node2D" parent="Table"]
+[node name="Slot1" type="Node2D" parent="Table/SnapSlots"]
 position = Vector2(25, 0)
 script = ExtResource("5_lquwl")
 
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
-[connection signal="child_entered_tree" from="Table/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
-[connection signal="child_entered_tree" from="Table/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]
+[connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
+[connection signal="child_entered_tree" from="Table/SnapSlots/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
+[connection signal="child_entered_tree" from="Table/SnapSlots/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]

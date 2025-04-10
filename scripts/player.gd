@@ -94,10 +94,14 @@ func _animateCard(card,targetPos,sig):
 		emit_signal("card_animation_finished")
 		
 
-func _playCard(card : int):
+func _playCard(card : int, is_special : bool = false):
 	# only active player allowed
 	if not is_active_turn:
 		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
+		return
+	
+	if Table.snapping:
+		print("Table still snapping previous cards.")
 		return
 		
 	var slot = Hand.get_child(card)
@@ -108,10 +112,17 @@ func _playCard(card : int):
 			currentCard = slot.getCard()
 	
 	if currentCard != null:
-		print("Player "+str(playerID)+" plays "+ currentCard.Name)
-		var targetSlot = Table.get_node("Slot"+str(playerID))
+		# 'targetSlot' target depends on whether card placed as special
+		var targetSlot = Table.get_node("SnapSlots/Slot"+str(playerID))
+		if is_special:
+			print("Player "+str(playerID)+" plays "+ currentCard.Name + " as Bloingo!")
+			targetSlot = Table.get_node("SlotSpecial")
+		else:
+			print("Player "+str(playerID)+" plays "+ currentCard.Name)
+		
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
 		_animateCard(currentCard,targetSlot.position,true)
+		
 		# automatically replenish the slot last placed from
 		# (if there are still cards)
 		if PlayerDeck.get_child_count() > 0:
@@ -119,14 +130,18 @@ func _playCard(card : int):
 			newCard.reparent(slot, false)
 			newCard.position.y += 50
 			_animateCard(newCard,Vector2(newCard.position.x,newCard.position.y - 50),false)
-			print("Slot " + str(card) + " replenished automatically")
+			#print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")
 	else:
-		print("No cards in slot!")
+		print("Player "+str(playerID)+": No cards in that slot!")
 		
 	update_player_ui()
+	
+func _playCardSpecial(card : int):
+	print("shift modifier active on: " + str(card))
 
+	
 func _countCards():
 	var count = 0
 	for slot in Hand.get_children():
@@ -138,13 +153,20 @@ func _input(event) -> void:
 	if is_active_turn:
 		if event is InputEventKey and event.pressed: #if detected input is a keypress and *pressed* not *released*.
 			var pressedKey = event["keycode"]
-			if pressedKey in playerControls[playerID]: #check if it's in the player's controls.
-				_processControls(playerControls[playerID][pressedKey])
-					
-	
+			if pressedKey in playerControls[playerID]: #check if it's in the player's controls.			
+				var baseAction = playerControls[playerID][pressedKey]
+				var action = baseAction
+				# check shift key held
+				if Input.is_key_pressed(KEY_SHIFT):
+					action = "Shift_" + baseAction
+				_processControls(action)
+				
+				
 func _processControls(action : String):
 	if action.begins_with("Card"):
-		_playCard(int(action.substr(4)))
+		_playCard(int(action.substr(4)), false)
+	if action.begins_with("Shift_Card"):
+		_playCard(int(action.substr(11)), true)
 	
 func _physics_process(delta):
 	pass
