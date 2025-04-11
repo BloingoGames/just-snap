@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=14 format=3 uid="uid://ct7volyo6pjkb"]
 
+[ext_resource type="Script" uid="uid://bt4r04hqrnr1" path="res://scripts/fmod_event_emitter_2d.gd" id="1_4c57u"]
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
 [ext_resource type="Texture2D" uid="uid://dhcnvcjcqfttt" path="res://assets/background.png" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://d3uw3hu5lhjt0" path="res://scenes/player.tscn" id="1_78llg"]
@@ -48,6 +49,15 @@ _data = {
 }
 
 [node name="Main" type="Node2D"]
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+bank_paths = ["res://fmod/banks/Desktop/Master.strings.bank", "res://fmod/banks/Desktop/Master.bank", "res://fmod/banks/Desktop/Songs.bank"]
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="."]
+event_name = "event:/Song1"
+event_guid = "{bb4462b3-4906-4a1c-8eef-5cc1bf4120be}"
+preload_event = false
+script = ExtResource("1_4c57u")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = ExtResource("1_5vw27")
@@ -128,6 +138,7 @@ script = ExtResource("5_lquwl")
 position = Vector2(25, 0)
 script = ExtResource("5_lquwl")
 
+[connection signal="timeline_beat" from="FmodEventEmitter2D" to="FmodEventEmitter2D" method="_on_timeline_beat"]
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
 [connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
