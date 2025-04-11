@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=10 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
 [ext_resource type="Texture2D" uid="uid://dhcnvcjcqfttt" path="res://assets/background.png" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://d3uw3hu5lhjt0" path="res://scenes/player.tscn" id="1_78llg"]
 [ext_resource type="PackedScene" uid="uid://dnn5i0yjgbw7t" path="res://scenes/deck.tscn" id="2_cxvfi"]
-[ext_resource type="Script" uid="uid://bptniabsfg2p7" path="res://scripts/player_signals.gd" id="3_272bh"]
+[ext_resource type="Script" path="res://scripts/player_signals.gd" id="3_272bh"]
 [ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
 [ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
 [ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://blskacp21j201" path="res://rhythm_bar.tscn" id="7_272bh"]
 
 [node name="Main" type="Node2D"]
 
@@ -63,6 +64,23 @@ script = ExtResource("5_lquwl")
 [node name="Slot1" type="Node2D" parent="Table"]
 position = Vector2(25, 0)
 script = ExtResource("5_lquwl")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_left = -269.0
+offset_top = -64.0
+offset_right = -136.0
+offset_bottom = 67.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(133, 131)
+render_target_update_mode = 4
+
+[node name="RhythmBar" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_272bh")]
+position = Vector2(61, 59)
+scale = Vector2(0.7, 0.7)
 
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
