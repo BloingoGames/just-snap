@@ -100,9 +100,29 @@ func _playCard(card : int, is_special : bool = false):
 		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
 		return
 	
+	# block input during snap animation
 	if Table.snapping:
 		print("Table still snapping previous cards.")
 		return
+		
+	# get accuracy of player move
+	# should probably be a function, and no need to keep getting the node
+	var fmod_node = get_node("../FmodEventEmitter2D")
+	if fmod_node:
+		var timeToNext = fmod_node.timeToNextBeat()
+		var interval = fmod_node.beatInterval
+		var timeSinceLast = interval - timeToNext
+		var diff = min(timeToNext, timeSinceLast)
+		
+		var sign: String
+		if timeToNext < timeSinceLast:
+			diff = timeToNext
+			sign = "-"
+		else:
+			diff = timeSinceLast
+			sign = "+"
+			
+		print(sign + str(diff) + " from nearest beat")
 		
 	var slot = Hand.get_child(card)
 	
