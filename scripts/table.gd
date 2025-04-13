@@ -8,14 +8,6 @@ var snapping = false
 @export var SnapSlots : Node2D
 @export var SnapAnimator : AnimationPlayer
 
-func _on_slot_0_child_entered_tree(node: Node) -> void:
-	await PlayerSignals.card_animation_finished
-	checkForSnap()
-
-func _on_slot_1_child_entered_tree(node: Node) -> void:
-	await PlayerSignals.card_animation_finished
-	checkForSnap()
-
 func checkEmpty():
 	if SnapSlots.get_node("Slot0").get_child_count() > 0 and SnapSlots.get_node("Slot1").get_child_count() > 0:
 		return false
@@ -36,8 +28,10 @@ func clearCards():
 	for card in cardsToClear:
 		card.queue_free()
 		card = null
+		
+	return len(cardsToClear)
 
-func checkForSnap():
+func checkForSnap(player):
 	if not checkEmpty():
 		var Slot0 = SnapSlots.get_node("Slot0")
 		var Slot1 = SnapSlots.get_node("Slot1")
@@ -47,5 +41,10 @@ func checkForSnap():
 			snappedCards.append(Slot1.getCard()) #Add snapped cards to array for future references/animations
 			
 			snapping = true #whilst we wait for animations etc., snapping state = true
-			await clearCards()
+			var points = await clearCards()
+			emit_signal("snap_occurred",points,player)
 			snapping = false
+
+
+func _on_player_signals_try_snap(player) -> void:
+	checkForSnap(player)

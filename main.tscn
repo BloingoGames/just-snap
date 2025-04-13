@@ -213,8 +213,11 @@ script = ExtResource("5_lquwl")
 
 [connection signal="timeline_beat" from="FmodEventEmitter2D" to="FmodEventEmitter2D" method="_on_timeline_beat"]
 [connection signal="timeline_beat" from="FmodEventEmitter2D" to="RhythmIndicator" method="_on_fmod_event_emitter_2d_timeline_beat"]
+[connection signal="try_snap" from="PlayerSignals" to="Table" method="_on_player_signals_try_snap"]
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
+[connection signal="try_snap" from="Player1" to="PlayerSignals" method="_on_player_1_try_snap"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
+[connection signal="try_snap" from="Player2" to="PlayerSignals" method="_on_player_2_try_snap"]
 [connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/SnapSlots/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/SnapSlots/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]

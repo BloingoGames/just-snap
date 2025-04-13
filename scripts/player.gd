@@ -2,6 +2,7 @@ extends Node2D
 
 signal turn_finished
 signal card_animation_finished
+signal try_snap
 
 @export var playerID : int
 @export var playerName : String = "Player"
@@ -142,6 +143,7 @@ func _playCard(card : int, is_special : bool = false):
 		
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
 		_animateCard(currentCard,targetSlot.position,true)
+		emit_signal("try_snap",playerID)
 		
 		# automatically replenish the slot last placed from
 		# (if there are still cards)
@@ -153,6 +155,7 @@ func _playCard(card : int, is_special : bool = false):
 			#print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")
+		
 	else:
 		print("Player "+str(playerID)+": No cards in that slot!")
 		
