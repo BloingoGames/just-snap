@@ -39,4 +39,5 @@ func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
 	if not initialised:
 		var newSpeed = (1.0 / time_sig_lower) / ((FmodEventEmitter.beatInterval / 1000) * 60)
 		initialise(params["tempo"],params["time_signature_upper"],params["time_signature_lower"],newSpeed)
+	#if needed to avoid desync we could probably grab the current beat here and snap to that exact position
 	$AnimationPlayer.play("beat")
