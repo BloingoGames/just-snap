@@ -9,6 +9,9 @@ var lastBeatTime : float
 var beatInterval = null
 var timeIntoCurrentBeat : float
 
+var time_sig_upper : int
+var time_sig_lower : int
+
 func _ready() -> void:
 	play()
 	
@@ -21,6 +24,9 @@ func _on_timeline_beat(params: Dictionary) -> void:
 	fmodPosition = params["position"]
 	lastBeatTime = Time.get_ticks_msec()
 	tempo = params["tempo"]
+	print(params)
+	time_sig_upper = params["time_signature_upper"]
+	time_sig_lower = params["time_signature_lower"]
 	if not beatInterval:
 		beatInterval = 60000.0 / tempo
 	
