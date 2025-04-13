@@ -43,8 +43,10 @@ func checkForSnap(player):
 			snapping = true #whilst we wait for animations etc., snapping state = true
 			var points = await clearCards()
 			emit_signal("snap_occurred",points,player)
+			print("Snapping player", player)
 			snapping = false
 
 
 func _on_player_signals_try_snap(player) -> void:
-	checkForSnap(player)
+	if not snapping:
+		checkForSnap(player)

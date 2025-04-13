@@ -12,10 +12,8 @@ func _on_player_2_card_animation_finished() -> void:
 
 
 func _on_player_1_try_snap(player) -> void:
-	await card_animation_finished
 	emit_signal("try_snap",player)
 
 
 func _on_player_2_try_snap(player) -> void:
-	await card_animation_finished
 	emit_signal("try_snap",player)
