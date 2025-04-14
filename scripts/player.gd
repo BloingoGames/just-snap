@@ -115,6 +115,8 @@ func _playCard(card : int, is_special : bool = false):
 		var timeSinceLast = interval - timeToNext
 		var diff = min(timeToNext, timeSinceLast)
 		
+		var nearestBeat = fmod_node.getNearestBeat()
+		
 		var sign: String
 		if timeToNext < timeSinceLast:
 			diff = timeToNext
@@ -124,6 +126,7 @@ func _playCard(card : int, is_special : bool = false):
 			sign = "+"
 			
 		print(sign + str(diff) + " from nearest beat")
+		print("Nearest beat is ", nearestBeat)
 		
 	var slot = Hand.get_child(card)
 	

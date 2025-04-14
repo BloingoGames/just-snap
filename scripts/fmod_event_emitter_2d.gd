@@ -5,6 +5,7 @@ const NEXT_BEAT_TOLERANCE = 1
 var startTime : float
 var tempo : float
 var fmodPosition : float
+var lastBeat : int
 var lastBeatTime : float
 var beatInterval = null
 var timeIntoCurrentBeat : float
@@ -23,6 +24,7 @@ func _ready() -> void:
 func _on_timeline_beat(params: Dictionary) -> void:
 	fmodPosition = params["position"]
 	lastBeatTime = Time.get_ticks_msec()
+	lastBeat = params["beat"]
 	tempo = params["tempo"]
 	print(params)
 	time_sig_upper = params["time_signature_upper"]
@@ -51,3 +53,15 @@ func timeToNextBeat():
 		timeToNextBeat = beatInterval
 	
 	return timeToNextBeat
+
+func getNearestBeat():
+	var timeToNextBeat = timeToNextBeat()
+	if timeToNextBeat > beatInterval / 2:
+		return lastBeat
+	elif lastBeat >= time_sig_lower:
+		return 1
+	else:
+		return lastBeat + 1
+	#Pretty self explanatory. If more than half the interval away, nearest is the last one.
+	#If we're on the last beat in the bar and more than halfway, nearest is one. 
+	#Otherwise, last beat plus one
