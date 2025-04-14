@@ -7,3 +7,6 @@
 .vs/
 
 #fmod cached crap
+fmod/project/.cache/
+fmod/project/.unsaved/
+fmod/project/.user/
