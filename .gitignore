@@ -5,3 +5,5 @@
 # IDE specific ignores
 .vscode/
 .vs/
+
+#fmod cached crap
