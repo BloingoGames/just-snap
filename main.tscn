@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=22 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Script" uid="uid://bt4r04hqrnr1" path="res://scripts/fmod_event_emitter_2d.gd" id="1_4c57u"]
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
@@ -9,31 +9,20 @@
 [ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
 [ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
 [ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://cffn0bqxe1d0h" path="res://assets/UI/indicatorMiddle.png" id="5_w48qg"]
+[ext_resource type="Texture2D" uid="uid://b5bctg4wid8d6" path="res://assets/UI/indicatorSuits.png" id="6_vivmo"]
 [ext_resource type="Theme" uid="uid://btykdtllk2gco" path="res://assets/table/slot.tres" id="9_kek77"]
-[ext_resource type="Texture2D" uid="uid://ba0pas6nu6bql" path="res://assets/UI/indicatorTest.png" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://chl6ny4vvsajx" path="res://scripts/rhythm_indicator.gd" id="11_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://di8x7uox7g8aj" path="res://assets/UI/indicatorCursor.png" id="12_dg77c"]
 
 [sub_resource type="Curve2D" id="Curve2D_ycdy4"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, -16, 0, 0, 0, 0, 7, -15, 0, 0, 0, 0, 11, -11, 0, 0, 0, 0, 15, -7, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 15, 7, 0, 0, 0, 0, 11, 11, 0, 0, 0, 0, 7, 15, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, -7, 15, 0, 0, 0, 0, -11, 11, 0, 0, 0, 0, -15, 7, 0, 0, 0, 0, -16, 0, 0, 0, 0, 0, -15, -7, 0, 0, 0, 0, -11, -11, 0, 0, 0, 0, -7, -15, 0, 0, 0, 0, 0, -16)
+"points": PackedVector2Array(0, 0, 0, 0, 0, -14.7826, 0, 0, 0, 0, 6.66666, -13.0435, 0, 0, 0, 0, 10.8333, -9.56522, 0, 0, 0, 0, 14.1667, -5.21739, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 14.1667, 4.34783, 0, 0, 0, 0, 10.8333, 9.56522, 0, 0, 0, 0, 6.66666, 13.0435, 0, 0, 0, 0, 0, 14.7826, 0, 0, 0, 0, -6.66666, 13.0435, 0, 0, 0, 0, -10.8333, 9.56522, 0, 0, 0, 0, -14.1667, 4.34783, 0, 0, 0, 0, -15, 0, 0, 0, 0, 0, -14.1667, -4.34783, 0, 0, 0, 0, -10.8333, -9.56522, 0, 0, 0, 0, -6.66666, -13.0435, 0, 0, 0, 0, 0, -14.7826)
 }
 point_count = 17
 
 [sub_resource type="Animation" id="Animation_w48qg"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_ycdy4"]
 resource_name = "beat"
@@ -41,7 +30,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath("IndictorSuits:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -123,19 +112,25 @@ metadata/_edit_use_anchors_ = true
 
 [node name="RhythmIndicator" type="Node2D" parent="." node_paths=PackedStringArray("CursorFollower", "FmodEventEmitter")]
 position = Vector2(152, 2)
+scale = Vector2(1.2, 1.15)
 script = ExtResource("11_ycdy4")
 CursorFollower = NodePath("Path2D/PathFollow2D")
 FmodEventEmitter = NodePath("../FmodEventEmitter2D")
 
-[node name="IndicatorSprite" type="Sprite2D" parent="RhythmIndicator"]
+[node name="IndicatorMiddle" type="Sprite2D" parent="RhythmIndicator"]
 material = ExtResource("1_5vw27")
-texture = ExtResource("11_efxa6")
+scale = Vector2(1, 0.958)
+texture = ExtResource("5_w48qg")
+
+[node name="IndictorSuits" type="Sprite2D" parent="RhythmIndicator"]
+material = ExtResource("1_5vw27")
+texture = ExtResource("6_vivmo")
 
 [node name="Path2D" type="Path2D" parent="RhythmIndicator"]
 curve = SubResource("Curve2D_ycdy4")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="RhythmIndicator/Path2D"]
-position = Vector2(0, -16)
+position = Vector2(0, -14.7826)
 rotates = false
 
 [node name="Cursor" type="Sprite2D" parent="RhythmIndicator/Path2D/PathFollow2D"]
