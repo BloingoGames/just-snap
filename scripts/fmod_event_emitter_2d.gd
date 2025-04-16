@@ -26,9 +26,10 @@ func _on_timeline_beat(params: Dictionary) -> void:
 	lastBeatTime = Time.get_ticks_msec()
 	lastBeat = params["beat"]
 	tempo = params["tempo"]
-	print(params)
+
 	time_sig_upper = params["time_signature_upper"]
 	time_sig_lower = params["time_signature_lower"]
+	Global.currentTimeSig = str(time_sig_lower)+'-'+str(time_sig_upper)
 	if not beatInterval:
 		beatInterval = 60000.0 / tempo
 	

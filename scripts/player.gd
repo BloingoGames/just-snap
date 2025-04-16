@@ -12,6 +12,8 @@ signal try_snap
 @export var Table : Node2D
 @export var flipped = false
 
+var initAnimationComplete = false
+
 @export var fmod_node : FmodEventEmitter2D
 
 @onready var playerUI = $PlayerUI # Player scene's UI container reference
@@ -40,10 +42,14 @@ var score : int = 0
 var is_active_turn = false
 
 func _ready() -> void:
+	$AccuracyDisplay.visible = false
 	if flipped: #Rotate player at top of screen's cards for animation to work
 		$AnimationPlayer.play("show_cards_flipped")
+		$AccuracyDisplay.position.y = -$AccuracyDisplay.position.y
 	else:
 		$AnimationPlayer.play("show_cards")
+	await $AnimationPlayer.animation_finished
+	initAnimationComplete = true
 
 func is_out() -> bool:
 	# check player's deck and hand for empty - if so, their turn is skipped
@@ -80,6 +86,7 @@ func showHand():
 	for slot in Hand.get_children():
 		if slot.getCard().is_in_group("Cards"):
 			var card = slot.getCard()
+			card.flipped = flipped
 		else:
 			var defaultCard = Sprite2D.new()
 			defaultCard.texture = load("res://assets/default_cards/back.png")
@@ -99,17 +106,7 @@ func _animateCard(card,targetPos,sig):
 		emit_signal("card_animation_finished")
 		
 
-func _playCard(card : int, is_special : bool = false):
-	# only active player allowed
-	if not is_active_turn:
-		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
-		return
-	
-	# block input during snap animation
-	if Table.snapping:
-		print("Table still snapping previous cards.")
-		return
-		
+func beatAccuracy():
 	# get accuracy of player move
 	if fmod_node:
 		var timeToNext = fmod_node.timeToNextBeat()
@@ -134,16 +131,34 @@ func _playCard(card : int, is_special : bool = false):
 		print("Nearest beat is ", nearestBeat)
 		
 		if timeToNearest > hitWindow.max():
-			print("Fucked")
+			print("Missed")
+			$AnimationPlayer.play("Miss")
 			return
 		elif timeToNearest > hitWindow[1]:
-			print("Poor")
-		elif timeToNearest > hitWindow[0]:
 			print("OK")
+			$AnimationPlayer.play("OK")
+		elif timeToNearest > hitWindow[0]:
+			print("Good")
+			$AnimationPlayer.play("Good")
 		else:
-			print("Fantastic")
-		
-		
+			print("Perfect")
+			$AnimationPlayer.play("Perfect")
+
+func _playCard(card : int, is_special : bool = false):
+	
+	if not initAnimationComplete:
+		return
+	
+	# only active player allowed
+	if not is_active_turn:
+		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
+		return
+	
+	# block input during snap animation
+	if Table.snapping:
+		print("Table still snapping previous cards.")
+		return
+	
 	var slot = Hand.get_child(card)
 	
 	var currentCard = null
@@ -152,6 +167,10 @@ func _playCard(card : int, is_special : bool = false):
 			currentCard = slot.getCard()
 	
 	if currentCard != null:
+		
+		beatAccuracy()
+		
+		currentCard.hideIndicator() #hide the little rhythm indicator above the card when thrown
 		# 'targetSlot' target depends on whether card placed as special
 		var targetSlot = Table.get_node("SnapSlots/Slot"+str(playerID))
 		if is_special:
@@ -168,6 +187,7 @@ func _playCard(card : int, is_special : bool = false):
 		# (if there are still cards)
 		if PlayerDeck.get_child_count() > 0:
 			var newCard = PlayerDeck.get_child(0) # pull one from the top of the deck
+			newCard.flipped = flipped
 			newCard.reparent(slot, false)
 			newCard.position.y += 50
 			_animateCard(newCard,Vector2(newCard.position.x,newCard.position.y - 50),false)
@@ -188,7 +208,9 @@ func _countCards():
 	var count = 0
 	for slot in Hand.get_children():
 		if slot.get_child_count() > 0:
-			count += 1 #Count each non-empty slot
+			for child in slot.get_children():
+				if child.is_in_group("Cards"):
+					count += 1 #Count each non-empty slot
 	return count
 	
 func _input(event) -> void:

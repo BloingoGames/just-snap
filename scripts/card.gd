@@ -7,7 +7,9 @@ var ID : int
 @export var Pip : String
 @export var Name : String
 @export var Sprite : Sprite2D #This should probably be animated at some point
-@export var playableBeats = [null,true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
+@export var playableBeats = [true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
+
+var flipped = false
 
 const allowedPips = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"]
 const allowedSuits = ["Spades","Hearts","Diamonds","Clubs"]
@@ -30,6 +32,11 @@ func _ready() -> void:
 		print("Invalid pip for card "+ str(ID)+"!")
 	if Suit not in allowedSuits:
 		print("Invalid suit for card "+ str(ID)+"!")
+	
+	_drawIndicatorBeats()
+		
+func drawIndicator():
+	pass
 
 func _createID(newID):
 	if newID == null:
@@ -56,3 +63,45 @@ func setParams(suit,pip,fancyName):
 func _setGenericSprite():
 	var genericSpritePath = "res://assets/default_cards/"+Suit.to_lower()+"_"+Pip+".png"
 	Sprite.texture = load(genericSpritePath)
+	
+func hideIndicator():
+	$CardIndicator.visible = false
+
+func _showIndicator():
+	$CardIndicator.texture = load("res://assets/UI/CardIndicators/"+Global.currentTimeSig+".png")
+
+func _drawIndicatorBeats():
+	var colour = Color.from_rgba8(255,98,36,255)
+	if Global.currentTimeSig == "4-4":
+		var image = $CardIndicator.texture.get_image()
+		for i in range(0,int(Global.currentTimeSig[0])):
+			if playableBeats[i] == true: #Colour pixel square for each beat. only 4/4 right now
+				if i == 0:
+					image.set_pixel(4,1,colour)
+					image.set_pixel(5,1,colour)
+					image.set_pixel(4,2,colour)
+					image.set_pixel(5,2,colour)
+				if i == 1:
+					image.set_pixel(7,4,colour)
+					image.set_pixel(7,5,colour)
+					image.set_pixel(8,4,colour)
+					image.set_pixel(8,5,colour)
+				if i == 2:
+					image.set_pixel(4,7,colour)
+					image.set_pixel(5,7,colour)
+					image.set_pixel(4,8,colour)
+					image.set_pixel(5,8,colour)
+				if i == 3:
+					image.set_pixel(1,4,colour)
+					image.set_pixel(2,4,colour)
+					image.set_pixel(1,5,colour)
+					image.set_pixel(2,5,colour)
+					
+		
+		$CardIndicator.texture = ImageTexture.create_from_image(image)
+	
+func _physics_process(delta: float) -> void:
+	if flipped: #This is really dumb but it works for now fuck it.
+		$CardIndicator.position.y = 38
+	else:
+		$CardIndicator.position.y = -38

@@ -1,12 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://3sihgdsiou2t"]
+[gd_scene load_steps=5 format=3 uid="uid://3sihgdsiou2t"]
 
 [ext_resource type="Script" uid="uid://jf2ntd742phs" path="res://scripts/card.gd" id="1_e1urb"]
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="2_6u4wf"]
+[ext_resource type="Texture2D" uid="uid://bwfdaoeotf5i1" path="res://assets/default_cards/back.png" id="3_kg30u"]
+[ext_resource type="Texture2D" uid="uid://db2u7xghffu1f" path="res://assets/UI/CardIndicators/4-4.png" id="3_ktuci"]
 
 [node name="Card" type="Node2D" node_paths=PackedStringArray("Sprite") groups=["Cards"]]
-visible = false
 script = ExtResource("1_e1urb")
 Sprite = NodePath("CardSprite")
 
 [node name="CardSprite" type="Sprite2D" parent="."]
 material = ExtResource("2_6u4wf")
+texture = ExtResource("3_kg30u")
+
+[node name="CardIndicator" type="Sprite2D" parent="."]
+material = ExtResource("2_6u4wf")
+position = Vector2(0, -38)
+texture = ExtResource("3_ktuci")

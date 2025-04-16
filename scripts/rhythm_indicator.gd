@@ -26,8 +26,6 @@ func initialise(tempo,time_sig_upper,time_sig_lower,newSpeed):
 	time_sig_upper = time_sig_upper
 	time_sig_lower = time_sig_lower
 	speed = newSpeed
-	print("Speed: ",speed)
-	print("Tempo: ",tempo)
 	initialised = true
 	
 	
