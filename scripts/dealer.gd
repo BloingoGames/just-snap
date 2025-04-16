@@ -18,9 +18,9 @@ func _ready() -> void:
 	
 	start_turn()
 
-func on_snap_occurred(points):
-	players[current_player_idx].score += points
-	players[current_player_idx].update_player_ui()
+func on_snap_occurred(points,player):
+	players[player].score += points
+	players[player].update_player_ui()
 
 func deal(players):
 	var cards = Deck.get_children()

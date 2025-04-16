@@ -2,6 +2,7 @@ extends Node2D
 
 signal turn_finished
 signal card_animation_finished
+signal try_snap
 
 @export var playerID : int
 @export var playerName : String = "Player"
@@ -100,9 +101,32 @@ func _playCard(card : int, is_special : bool = false):
 		print("No, not your turn, player " + str(playerID) + "! Play properly or we're going home!")
 		return
 	
+	# block input during snap animation
 	if Table.snapping:
 		print("Table still snapping previous cards.")
 		return
+		
+	# get accuracy of player move
+	# should probably be a function, and no need to keep getting the node
+	var fmod_node = get_node("../FmodEventEmitter2D")
+	if fmod_node:
+		var timeToNext = fmod_node.timeToNextBeat()
+		var interval = fmod_node.beatInterval
+		var timeSinceLast = interval - timeToNext
+		var diff = min(timeToNext, timeSinceLast)
+		
+		var nearestBeat = fmod_node.getNearestBeat()
+		
+		var sign: String
+		if timeToNext < timeSinceLast:
+			diff = timeToNext
+			sign = "-"
+		else:
+			diff = timeSinceLast
+			sign = "+"
+			
+		print(sign + str(diff) + " from nearest beat")
+		print("Nearest beat is ", nearestBeat)
 		
 	var slot = Hand.get_child(card)
 	
@@ -122,6 +146,7 @@ func _playCard(card : int, is_special : bool = false):
 		
 		currentCard.reparent(targetSlot,true) #Slot corresponds to player ID
 		_animateCard(currentCard,targetSlot.position,true)
+		emit_signal("try_snap",playerID)
 		
 		# automatically replenish the slot last placed from
 		# (if there are still cards)
@@ -133,6 +158,7 @@ func _playCard(card : int, is_special : bool = false):
 			#print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")
+		
 	else:
 		print("Player "+str(playerID)+": No cards in that slot!")
 		
