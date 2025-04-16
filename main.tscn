@@ -147,15 +147,17 @@ libraries = {
 [node name="PlayerSignals" type="Node2D" parent="."]
 script = ExtResource("3_272bh")
 
-[node name="Player1" parent="." node_paths=PackedStringArray("Table") instance=ExtResource("1_78llg")]
+[node name="Player1" parent="." node_paths=PackedStringArray("Table", "fmod_node") instance=ExtResource("1_78llg")]
 position = Vector2(0, 120)
 Table = NodePath("../Table")
+fmod_node = NodePath("../FmodEventEmitter2D")
 
-[node name="Player2" parent="." node_paths=PackedStringArray("Table") instance=ExtResource("1_78llg")]
+[node name="Player2" parent="." node_paths=PackedStringArray("Table", "fmod_node") instance=ExtResource("1_78llg")]
 position = Vector2(0, -120)
 playerID = 1
 Table = NodePath("../Table")
 flipped = true
+fmod_node = NodePath("../FmodEventEmitter2D")
 
 [node name="Dealer" type="Node2D" parent="." node_paths=PackedStringArray("Deck", "Player1", "Player2")]
 script = ExtResource("3_j3uem")

@@ -12,7 +12,11 @@ signal try_snap
 @export var Table : Node2D
 @export var flipped = false
 
+@export var fmod_node : FmodEventEmitter2D
+
 @onready var playerUI = $PlayerUI # Player scene's UI container reference
+
+var hitWindow = [80,150,250] #Great, Good, OK
 
 var playerControls = { #Keys are player ID. Dict within player ID is that player's control scheme
 	0: {
@@ -107,26 +111,38 @@ func _playCard(card : int, is_special : bool = false):
 		return
 		
 	# get accuracy of player move
-	# should probably be a function, and no need to keep getting the node
-	var fmod_node = get_node("../FmodEventEmitter2D")
 	if fmod_node:
 		var timeToNext = fmod_node.timeToNextBeat()
 		var interval = fmod_node.beatInterval
 		var timeSinceLast = interval - timeToNext
 		var diff = min(timeToNext, timeSinceLast)
-		
+		var timeToNearest = diff
 		var nearestBeat = fmod_node.getNearestBeat()
 		
 		var sign: String
 		if timeToNext < timeSinceLast:
 			diff = timeToNext
 			sign = "-"
+			
 		else:
 			diff = timeSinceLast
 			sign = "+"
+		
+		timeToNearest = diff
 			
 		print(sign + str(diff) + " from nearest beat")
 		print("Nearest beat is ", nearestBeat)
+		
+		if timeToNearest > hitWindow.max():
+			print("Fucked")
+			return
+		elif timeToNearest > hitWindow[1]:
+			print("Poor")
+		elif timeToNearest > hitWindow[0]:
+			print("OK")
+		else:
+			print("Fantastic")
+		
 		
 	var slot = Hand.get_child(card)
 	

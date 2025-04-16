@@ -7,6 +7,7 @@ var ID : int
 @export var Pip : String
 @export var Name : String
 @export var Sprite : Sprite2D #This should probably be animated at some point
+@export var playableBeats = [null,true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
 
 const allowedPips = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"]
 const allowedSuits = ["Spades","Hearts","Diamonds","Clubs"]
