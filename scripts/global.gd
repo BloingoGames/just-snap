@@ -11,3 +11,6 @@ func _ready() -> void:
 ##At least allows us to reuse effects for different cards
 func BloigoEffect1():
 	print("BLOIGO 1 ACTIVATED")
+	
+func BloingoEffect2():
+	print("BLOINGO 2 ACTIVATED")

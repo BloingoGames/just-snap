@@ -34,8 +34,15 @@ func deal(players):
 	
 	for player in players:
 		for i in range(0,toDeal):
-			Deck.get_child(0).reparent(player.get_node("PlayerDeck")) #Move card nodes from Deck to Player Deck
-	
+			var card = Deck.get_child(0)
+			var cardReplaceID = card["Pip"] + card["Suit"]
+			if cardReplaceID in player.uniquePlayerDeck.deck:
+				print("Found a spicy ", cardReplaceID+".")
+				print("Replacing card for ",str(player.playerID))
+				
+			card.reparent(player.get_node("PlayerDeck")) #Move card nodes from Deck to Player Deck
+			
+			
 	Player1.showHand()
 	Player2.showHand()
 

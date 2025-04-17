@@ -12,6 +12,9 @@ signal try_snap
 @export var Table : Node2D
 @export var flipped = false
 
+var uniqueDeckStr = str("res://data/Player"+str(playerID)+"Deck.tres")
+var uniquePlayerDeck = load(uniqueDeckStr)
+
 var initAnimationComplete = false
 
 @export var fmod_node : FmodEventEmitter2D
@@ -84,7 +87,7 @@ func showHand():
 	_moveToViewer()
 	
 	for slot in Hand.get_children():
-		if slot.getCard().is_in_group("Cards"):
+		if slot.getCard() and slot.getCard().is_in_group("Cards"):
 			var card = slot.getCard()
 			card.flipped = flipped
 		else:
