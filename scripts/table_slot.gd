@@ -9,6 +9,7 @@ func _on_child_entered(child):
 	child.position = Vector2(0,0)
 	child.visible = true
 	if specialSlot:
+		print(child.bloingoEffect)
 		child.bloingoEffect.call()
 	
 func getCard():

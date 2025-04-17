@@ -8,7 +8,8 @@ var ID : int
 @export var Name : String
 @export var Sprite : Sprite2D #This should probably be animated at some point
 @export var playableBeats = [true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
-var bloingoEffect = Callable(Global.BloigoEffect1)
+var bloingoEffect : Callable #no default because _ready -> if not initalised: should sort that for any broken cards.
+var customSpriteSet = false
 
 var flipped = false
 
@@ -19,15 +20,17 @@ var blocking = false
 
 func _ready() -> void:
 	
+	if not customSpriteSet:
+		_setGenericSprite() #set generic texture for each playing cards. the special cards will need to be able to override this
+	
 	if not initialised:
 		print("Card instantiated with no parameters! Setting to default")
 		Suit = "Spades"
 		Pip = "A"
 		Name = "Ace of Spades" #default
+		bloingoEffect = Global.BloingoEffect1
 		
 	_createID(null)
-	
-	_setGenericSprite() #set generic texture for each playing cards. the special cards will need to be able to override this
 		
 	if Pip not in allowedPips:
 		print("Invalid pip for card "+ str(ID)+"!")
@@ -51,15 +54,22 @@ func _createID(newID):
 		_createID(ID+1) #Just brute force until ID is new lol
 	#print("ID set to " + str(ID))
 	
-func setParams(suit,pip,fancyName,bloingoEffect):
+func setParams(suit,pip,fancyName,BloingoEffect,special=false):
 	if not initialised:
 		Suit = suit
 		Pip = pip
 		Name = fancyName
-		bloingoEffect = bloingoEffect
+		bloingoEffect = BloingoEffect
+		if special:
+			print("replacing sprite",ID)
+			var SpritePath = "res://assets/special_cards/"+fancyName+".png"
+			Sprite.texture = load(SpritePath)
+			customSpriteSet = true
+
 		initialised = true
 		
 func _setGenericSprite():
+	print("generic sprite",ID)
 	var genericSpritePath = "res://assets/default_cards/"+Suit.to_lower()+"_"+Pip+".png"
 	Sprite.texture = load(genericSpritePath)
 	

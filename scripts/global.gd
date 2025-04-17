@@ -9,7 +9,7 @@ func _ready() -> void:
 	
 ##For now throwing these in Global. We should probably find a better spot, but this
 ##At least allows us to reuse effects for different cards
-func BloigoEffect1():
+func BloingoEffect1():
 	print("BLOIGO 1 ACTIVATED")
 	
 func BloingoEffect2():

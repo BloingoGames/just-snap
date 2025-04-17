@@ -36,9 +36,20 @@ func deal(players):
 		for i in range(0,toDeal):
 			var card = Deck.get_child(0)
 			var cardReplaceID = card["Pip"] + card["Suit"]
+			#check for the card in the player's inventory
 			if cardReplaceID in player.uniquePlayerDeck.deck:
 				print("Found a spicy ", cardReplaceID+".")
 				print("Replacing card for ",str(player.playerID))
+				var newName = player.uniquePlayerDeck.deck[cardReplaceID]["Name"]
+				var newPip = player.uniquePlayerDeck.deck[cardReplaceID]["Pip"]
+				var newSuit = player.uniquePlayerDeck.deck[cardReplaceID]["Suit"]
+				var newBloingoEffect = player.uniquePlayerDeck.deck[cardReplaceID]["bloingoEffect"]
+
+				Deck.remove_child(card) #make sure the old card is definitely removed
+				card.queue_free()
+				
+				#replace with the new one
+				card = Deck.generateCard(newSuit,newPip,newName,newBloingoEffect,true) #true sets special=true, meaning the unique sprite is loaded
 				
 			card.reparent(player.get_node("PlayerDeck")) #Move card nodes from Deck to Player Deck
 			
