@@ -7,7 +7,7 @@ var ID : int
 @export var Pip : String
 @export var Name : String
 @export var Sprite : Sprite2D #This should probably be animated at some point
-@export var playableBeats = [true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
+var playableBeats = [true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
 var bloingoEffect : Callable #no default because _ready -> if not initalised: should sort that for any broken cards.
 var customSpriteSet = false
 
@@ -54,12 +54,13 @@ func _createID(newID):
 		_createID(ID+1) #Just brute force until ID is new lol
 	#print("ID set to " + str(ID))
 	
-func setParams(suit,pip,fancyName,BloingoEffect,special=false):
+func setParams(suit,pip,fancyName,BloingoEffect,beats:Array,special=false):
 	if not initialised:
 		Suit = suit
 		Pip = pip
 		Name = fancyName
 		bloingoEffect = BloingoEffect
+		playableBeats = beats
 		if special:
 			var SpritePath = "res://assets/special_cards/"+fancyName+".png"
 			Sprite.texture = load(SpritePath)

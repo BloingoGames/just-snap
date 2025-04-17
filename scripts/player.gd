@@ -12,6 +12,8 @@ signal try_snap
 @export var Table : Node2D
 @export var flipped = false
 
+var currentBar : int
+
 var uniqueDeckStr = str("res://data/Player"+str(playerID)+"Deck.tres")
 var uniquePlayerDeck = load(uniqueDeckStr)
 
@@ -167,6 +169,10 @@ func _playCard(card : int, is_special : bool = false):
 			currentCard = slot.getCard()
 	
 	if currentCard != null:
+		
+		if not currentCard.playableBeats[fmod_node.getNearestBeat()-1]:
+			$AnimationPlayer.play("Miss")
+			return
 		
 		if not beatAccuracy():
 			return

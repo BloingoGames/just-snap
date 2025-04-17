@@ -44,12 +44,12 @@ func deal(players):
 				var newPip = player.uniquePlayerDeck.deck[cardReplaceID]["Pip"]
 				var newSuit = player.uniquePlayerDeck.deck[cardReplaceID]["Suit"]
 				var newBloingoEffect = player.uniquePlayerDeck.deck[cardReplaceID]["bloingoEffect"]
-
+				var playableBeats = player.uniquePlayerDeck.deck[cardReplaceID]["playableBeats"]
 				Deck.remove_child(card) #make sure the old card is definitely removed
 				card.queue_free()
 				
 				#replace with the new one
-				card = Deck.generateCard(newSuit,newPip,newName,newBloingoEffect,true) #true sets special=true, meaning the unique sprite is loaded
+				card = Deck.generateCard(newSuit,newPip,newName,newBloingoEffect,playableBeats,true) #true sets special=true, meaning the unique sprite is loaded
 				
 			card.reparent(player.get_node("PlayerDeck")) #Move card nodes from Deck to Player Deck
 			
@@ -91,6 +91,7 @@ func start_turn():
 	
 func end_turn():
 	current_player_idx = (current_player_idx + 1) % players.size()
+	barTracker = 1
 	start_turn()
 	
 func end_game():
@@ -104,5 +105,4 @@ func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
 		lastBar = currentBar
 	if barTracker > 3:
 		print("Ran out of time")
-		barTracker = 1
 		end_turn()
