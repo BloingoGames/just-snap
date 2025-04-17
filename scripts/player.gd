@@ -134,17 +134,13 @@ func beatAccuracy():
 		print("Nearest beat is ", nearestBeat)
 		
 		if timeToNearest > hitWindow.max():
-			print("Missed")
 			$AnimationPlayer.play("Miss")
 			return false
 		elif timeToNearest > hitWindow[1]:
-			print("OK")
 			$AnimationPlayer.play("OK")
 		elif timeToNearest > hitWindow[0]:
-			print("Good")
 			$AnimationPlayer.play("Good")
 		else:
-			print("Perfect")
 			$AnimationPlayer.play("Perfect")
 	return true
 
