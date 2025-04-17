@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b5bctg4wid8d6" path="res://assets/UI/indicatorSuits.png" id="6_vivmo"]
 [ext_resource type="Script" uid="uid://chl6ny4vvsajx" path="res://scripts/rhythm_indicator.gd" id="11_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://di8x7uox7g8aj" path="res://assets/UI/indicatorCursor.png" id="12_dg77c"]
-[ext_resource type="Shader" uid="uid://bskdwd1smbvl8" path="res://shaders/warble.gdshader" id="14_vivmo"]
+[ext_resource type="Shader" path="res://shaders/warble.gdshader" id="14_vivmo"]
 [ext_resource type="Texture2D" uid="uid://bqtcgai06li4v" path="res://assets/table/bloingBorder.png" id="14_w48qg"]
 [ext_resource type="Script" uid="uid://bbylqtbkx2s45" path="res://scripts/slot_special_panel.gd" id="16_2cqfq"]
 
@@ -72,13 +72,6 @@ _data = {
 &"beat": SubResource("Animation_ycdy4")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cqfq"]
-shader = ExtResource("14_vivmo")
-shader_parameter/time = 4.832
-shader_parameter/strength = 0.0
-shader_parameter/frequency = 13.241
-shader_parameter/speed = 4.889
-
 [sub_resource type="Animation" id="Animation_4c57u"]
 length = 0.001
 tracks/0/type = "value"
@@ -92,18 +85,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SlotSpecialPanel:material")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("ShaderMaterial_2cqfq")]
 }
 
 [sub_resource type="Animation" id="Animation_kek77"]
@@ -127,6 +108,13 @@ _data = {
 &"RESET": SubResource("Animation_4c57u"),
 &"snap": SubResource("Animation_kek77")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cqfq"]
+shader = ExtResource("14_vivmo")
+shader_parameter/time = 0.0
+shader_parameter/strength = 0.0
+shader_parameter/frequency = 13.0
+shader_parameter/speed = 5.0
 
 [node name="Main" type="Node2D"]
 
@@ -227,12 +215,8 @@ libraries = {
 &"": SubResource("AnimationLibrary_efxa6")
 }
 
-[node name="SlotSpecial" type="Node2D" parent="Table"]
-position = Vector2(-75, 0)
-script = ExtResource("5_lquwl")
-specialSlot = true
-
-[node name="SlotSpecialPanel" type="Panel" parent="Table/SlotSpecial"]
+[node name="SlotSpecialPanel" type="TextureRect" parent="Table" node_paths=PackedStringArray("SpecialSlot", "PlayerSignals")]
+material = SubResource("ShaderMaterial_2cqfq")
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -252,6 +236,7 @@ PlayerSignals = NodePath("../../PlayerSignals")
 [node name="SlotSpecial" type="Node2D" parent="Table"]
 position = Vector2(-75, 0)
 script = ExtResource("5_lquwl")
+specialSlot = true
 
 [node name="SnapSlots" type="Node2D" parent="Table"]
 material = ExtResource("1_5vw27")
