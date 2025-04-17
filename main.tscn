@@ -183,6 +183,7 @@ libraries = {
 [node name="SlotSpecial" type="Node2D" parent="Table"]
 position = Vector2(-75, 0)
 script = ExtResource("5_lquwl")
+specialSlot = true
 
 [node name="SlotSpecialPanel" type="Panel" parent="Table/SlotSpecial"]
 anchors_preset = 6

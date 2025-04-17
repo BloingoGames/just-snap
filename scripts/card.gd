@@ -8,6 +8,7 @@ var ID : int
 @export var Name : String
 @export var Sprite : Sprite2D #This should probably be animated at some point
 @export var playableBeats = [true,true,true,true,true,true,true] #playable beats up to 7 for 7/8 - assuming we wont go to any 
+var bloingoEffect = Callable(Global.BloigoEffect1)
 
 var flipped = false
 
@@ -34,9 +35,6 @@ func _ready() -> void:
 		print("Invalid suit for card "+ str(ID)+"!")
 	
 	_drawIndicatorBeats()
-		
-func drawIndicator():
-	pass
 
 func _createID(newID):
 	if newID == null:
@@ -53,11 +51,12 @@ func _createID(newID):
 		_createID(ID+1) #Just brute force until ID is new lol
 	#print("ID set to " + str(ID))
 	
-func setParams(suit,pip,fancyName):
+func setParams(suit,pip,fancyName,bloingoEffect):
 	if not initialised:
 		Suit = suit
 		Pip = pip
 		Name = fancyName
+		bloingoEffect = bloingoEffect
 		initialised = true
 		
 func _setGenericSprite():
