@@ -227,8 +227,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_efxa6")
 }
 
-[node name="SlotSpecialPanel" type="TextureRect" parent="Table" node_paths=PackedStringArray("SpecialSlot", "PlayerSignals")]
-material = SubResource("ShaderMaterial_2cqfq")
+[node name="SlotSpecial" type="Node2D" parent="Table"]
+position = Vector2(-75, 0)
+script = ExtResource("5_lquwl")
+specialSlot = true
+
+[node name="SlotSpecialPanel" type="Panel" parent="Table/SlotSpecial"]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
