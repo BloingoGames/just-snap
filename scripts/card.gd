@@ -61,7 +61,6 @@ func setParams(suit,pip,fancyName,BloingoEffect,special=false):
 		Name = fancyName
 		bloingoEffect = BloingoEffect
 		if special:
-			print("replacing sprite",ID)
 			var SpritePath = "res://assets/special_cards/"+fancyName+".png"
 			Sprite.texture = load(SpritePath)
 			customSpriteSet = true
@@ -69,7 +68,6 @@ func setParams(suit,pip,fancyName,BloingoEffect,special=false):
 		initialised = true
 		
 func _setGenericSprite():
-	print("generic sprite",ID)
 	var genericSpritePath = "res://assets/default_cards/"+Suit.to_lower()+"_"+Pip+".png"
 	Sprite.texture = load(genericSpritePath)
 	

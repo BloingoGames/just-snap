@@ -122,8 +122,8 @@ shader_parameter/speed = 5.0
 bank_paths = ["res://fmod/banks/Desktop/Master.strings.bank", "res://fmod/banks/Desktop/Master.bank", "res://fmod/banks/Desktop/Songs.bank"]
 
 [node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="."]
-event_name = "event:/Song1"
-event_guid = "{bb4462b3-4906-4a1c-8eef-5cc1bf4120be}"
+event_name = "event:/80bpm Click"
+event_guid = "{5e11b949-4540-4a83-8ee9-d092d90e850d}"
 preload_event = false
 script = ExtResource("1_4c57u")
 

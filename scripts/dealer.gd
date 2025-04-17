@@ -102,8 +102,7 @@ func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
 	if currentBar > lastBar:
 		barTracker += 1
 		lastBar = currentBar
-	print("Current player bar: " + str(barTracker))
 	if barTracker > 3:
-		print("Run out of time")
+		print("Ran out of time")
 		barTracker = 1
 		end_turn()
