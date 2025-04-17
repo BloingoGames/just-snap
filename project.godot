@@ -41,7 +41,11 @@ Global="*res://scripts/global.gd"
 
 window/size/viewport_width=960
 window/size/viewport_height=540
+window/size/resizable=false
+window/size/borderless=true
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
@@ -62,5 +66,5 @@ ui_accept={
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=2
+textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true

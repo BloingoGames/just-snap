@@ -24,5 +24,6 @@ vec4 texturePointSmooth(sampler2D smp, vec2 uv, vec2 pixel_size)
 
 void fragment()
 {
-	COLOR = texturePointSmooth(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
+	//COLOR = texturePointSmooth(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
+	COLOR = COLOR;
 }

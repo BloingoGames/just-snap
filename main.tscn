@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=25 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Script" uid="uid://bt4r04hqrnr1" path="res://scripts/fmod_event_emitter_2d.gd" id="1_4c57u"]
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
@@ -11,9 +11,11 @@
 [ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://cffn0bqxe1d0h" path="res://assets/UI/indicatorMiddle.png" id="5_w48qg"]
 [ext_resource type="Texture2D" uid="uid://b5bctg4wid8d6" path="res://assets/UI/indicatorSuits.png" id="6_vivmo"]
-[ext_resource type="Theme" uid="uid://btykdtllk2gco" path="res://assets/table/slot.tres" id="9_kek77"]
 [ext_resource type="Script" uid="uid://chl6ny4vvsajx" path="res://scripts/rhythm_indicator.gd" id="11_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://di8x7uox7g8aj" path="res://assets/UI/indicatorCursor.png" id="12_dg77c"]
+[ext_resource type="Shader" uid="uid://bskdwd1smbvl8" path="res://shaders/warble.gdshader" id="14_vivmo"]
+[ext_resource type="Texture2D" uid="uid://bqtcgai06li4v" path="res://assets/table/bloingBorder.png" id="14_w48qg"]
+[ext_resource type="Script" uid="uid://bbylqtbkx2s45" path="res://slot_special_panel.gd" id="16_2cqfq"]
 
 [sub_resource type="Curve2D" id="Curve2D_ycdy4"]
 _data = {
@@ -46,6 +48,13 @@ _data = {
 &"beat": SubResource("Animation_ycdy4")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cqfq"]
+shader = ExtResource("14_vivmo")
+shader_parameter/time = 4.832
+shader_parameter/strength = 0.0
+shader_parameter/frequency = 13.241
+shader_parameter/speed = 4.889
+
 [sub_resource type="Animation" id="Animation_4c57u"]
 length = 0.001
 tracks/0/type = "value"
@@ -59,6 +68,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SlotSpecialPanel:material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_2cqfq")]
 }
 
 [sub_resource type="Animation" id="Animation_kek77"]
@@ -180,21 +201,27 @@ libraries = {
 &"": SubResource("AnimationLibrary_efxa6")
 }
 
-[node name="SlotSpecial" type="Node2D" parent="Table"]
-position = Vector2(-75, 0)
-script = ExtResource("5_lquwl")
-
-[node name="SlotSpecialPanel" type="Panel" parent="Table/SlotSpecial"]
+[node name="SlotSpecialPanel" type="TextureRect" parent="Table" node_paths=PackedStringArray("SpecialSlot", "PlayerSignals")]
+material = SubResource("ShaderMaterial_2cqfq")
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -75.0
-offset_right = -75.0
+offset_left = -182.0
+offset_top = -36.0
+offset_right = -118.0
+offset_bottom = 36.0
 grow_horizontal = 0
 grow_vertical = 2
-theme = ExtResource("9_kek77")
+texture = ExtResource("14_w48qg")
+script = ExtResource("16_2cqfq")
+SpecialSlot = NodePath("../SlotSpecial")
+PlayerSignals = NodePath("../../PlayerSignals")
+
+[node name="SlotSpecial" type="Node2D" parent="Table"]
+position = Vector2(-75, 0)
+script = ExtResource("5_lquwl")
 
 [node name="SnapSlots" type="Node2D" parent="Table"]
 material = ExtResource("1_5vw27")
@@ -215,5 +242,6 @@ script = ExtResource("5_lquwl")
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
 [connection signal="try_snap" from="Player2" to="PlayerSignals" method="_on_player_2_try_snap"]
 [connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
+[connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table/SlotSpecialPanel" method="_on_slot_special_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/SnapSlots/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/SnapSlots/Slot1" to="Table" method="_on_slot_1_child_entered_tree"]
