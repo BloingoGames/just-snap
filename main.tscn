@@ -48,7 +48,7 @@ tracks/0/path = NodePath("IndictorSuits:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.233333),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 0.63728),
 "update": 0,
 "values": [Vector2(1.2, 1.2), Vector2(1, 1)]
@@ -60,10 +60,10 @@ tracks/1/path = NodePath("IndictorSuits:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.233333),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, -1.5708]
+"values": [0.0, 1.5708]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vivmo"]
@@ -170,6 +170,7 @@ texture = ExtResource("5_w48qg")
 [node name="IndictorSuits" type="Sprite2D" parent="RhythmIndicator"]
 texture_filter = 1
 material = ExtResource("1_5vw27")
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("6_vivmo")
 
 [node name="Path2D" type="Path2D" parent="RhythmIndicator"]
@@ -261,6 +262,7 @@ script = ExtResource("5_lquwl")
 
 [connection signal="timeline_beat" from="FmodEventEmitter2D" to="FmodEventEmitter2D" method="_on_timeline_beat"]
 [connection signal="timeline_beat" from="FmodEventEmitter2D" to="RhythmIndicator" method="_on_fmod_event_emitter_2d_timeline_beat"]
+[connection signal="timeline_beat" from="FmodEventEmitter2D" to="Dealer" method="_on_fmod_event_emitter_2d_timeline_beat"]
 [connection signal="try_snap" from="PlayerSignals" to="Table" method="_on_player_signals_try_snap"]
 [connection signal="card_animation_finished" from="Player1" to="PlayerSignals" method="_on_player_1_card_animation_finished"]
 [connection signal="try_snap" from="Player1" to="PlayerSignals" method="_on_player_1_try_snap"]

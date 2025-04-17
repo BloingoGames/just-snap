@@ -4,8 +4,12 @@ extends Node2D
 @export var Player1 : Node2D #For now just declaring each player in inspector. ->
 @export var Player2 : Node2D
 
+var barTracker = 1
+var lastBar = 1
+
 var current_player_idx = 0
 var players = []
+
 
 func _ready() -> void:
 	players = [Player1, Player2]
@@ -73,3 +77,15 @@ func end_turn():
 	
 func end_game():
 	print("game over")
+
+
+func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
+	var currentBar = params["bar"]
+	if currentBar > lastBar:
+		barTracker += 1
+		lastBar = currentBar
+	print("Current player bar: " + str(barTracker))
+	if barTracker > 3:
+		print("Run out of time")
+		barTracker = 1
+		end_turn()
