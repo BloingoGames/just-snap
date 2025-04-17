@@ -18,7 +18,7 @@ var initAnimationComplete = false
 
 @onready var playerUI = $PlayerUI # Player scene's UI container reference
 
-var hitWindow = [80,150,250] #Great, Good, OK
+var hitWindow = [80,150,200] #Great, Good, OK
 
 var playerControls = { #Keys are player ID. Dict within player ID is that player's control scheme
 	0: {
@@ -133,7 +133,7 @@ func beatAccuracy():
 		if timeToNearest > hitWindow.max():
 			print("Missed")
 			$AnimationPlayer.play("Miss")
-			return
+			return false
 		elif timeToNearest > hitWindow[1]:
 			print("OK")
 			$AnimationPlayer.play("OK")
@@ -143,6 +143,7 @@ func beatAccuracy():
 		else:
 			print("Perfect")
 			$AnimationPlayer.play("Perfect")
+	return true
 
 func _playCard(card : int, is_special : bool = false):
 	
@@ -168,7 +169,8 @@ func _playCard(card : int, is_special : bool = false):
 	
 	if currentCard != null:
 		
-		beatAccuracy()
+		if not beatAccuracy():
+			return
 		
 		currentCard.hideIndicator() #hide the little rhythm indicator above the card when thrown
 		# 'targetSlot' target depends on whether card placed as special
