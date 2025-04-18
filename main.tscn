@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b5bctg4wid8d6" path="res://assets/UI/indicatorSuits.png" id="6_vivmo"]
 [ext_resource type="Script" uid="uid://chl6ny4vvsajx" path="res://scripts/rhythm_indicator.gd" id="11_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://di8x7uox7g8aj" path="res://assets/UI/indicatorCursor.png" id="12_dg77c"]
-[ext_resource type="Shader" path="res://shaders/warble.gdshader" id="14_vivmo"]
+[ext_resource type="Shader" uid="uid://bskdwd1smbvl8" path="res://shaders/warble.gdshader" id="14_vivmo"]
 [ext_resource type="Texture2D" uid="uid://bqtcgai06li4v" path="res://assets/table/bloingBorder.png" id="14_w48qg"]
 [ext_resource type="Script" uid="uid://bbylqtbkx2s45" path="res://scripts/slot_special_panel.gd" id="16_2cqfq"]
 
@@ -144,15 +144,13 @@ texture = ExtResource("1_7mycd")
 metadata/_edit_use_anchors_ = true
 
 [node name="RhythmIndicator" type="Node2D" parent="." node_paths=PackedStringArray("CursorFollower", "FmodEventEmitter")]
-position = Vector2(152, 2)
-scale = Vector2(1.2, 1.15)
+position = Vector2(152, 0)
 script = ExtResource("11_ycdy4")
 CursorFollower = NodePath("Path2D/PathFollow2D")
 FmodEventEmitter = NodePath("../FmodEventEmitter2D")
 
 [node name="IndicatorMiddle" type="Sprite2D" parent="RhythmIndicator"]
 material = ExtResource("1_5vw27")
-scale = Vector2(1, 0.958)
 texture = ExtResource("5_w48qg")
 
 [node name="IndictorSuits" type="Sprite2D" parent="RhythmIndicator"]
