@@ -617,7 +617,7 @@ libraries = {
 
 [node name="AccuracyDisplay" type="AnimatedSprite2D" parent="."]
 material = ExtResource("3_dqkch")
-position = Vector2(0, -52)
+position = Vector2(0, -65)
 sprite_frames = SubResource("SpriteFrames_y4r1p")
 animation = &"OK"
 
