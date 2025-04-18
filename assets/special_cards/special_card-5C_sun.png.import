@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cow8b2mp3w3sq"
-path="res://.godot/imported/SPECIAL Two of Spades.png-b703018645b65b8d1832136fe266d44b.ctex"
+uid="uid://h3tafji4l14b"
+path="res://.godot/imported/special_card-5C_sun.png-4a412adb6c96f604633e391fb948a014.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/special_cards/SPECIAL Two of Spades.png"
-dest_files=["res://.godot/imported/SPECIAL Two of Spades.png-b703018645b65b8d1832136fe266d44b.ctex"]
+source_file="res://assets/special_cards/special_card-5C_sun.png"
+dest_files=["res://.godot/imported/special_card-5C_sun.png-4a412adb6c96f604633e391fb948a014.ctex"]
 
 [params]
 

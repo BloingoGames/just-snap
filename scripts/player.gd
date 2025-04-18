@@ -14,8 +14,8 @@ signal try_snap
 
 var currentBar : int
 
-var uniqueDeckStr = str("res://data/Player"+str(playerID)+"Deck.tres")
-var uniquePlayerDeck = load(uniqueDeckStr)
+@onready var uniqueDeckStr = str("res://data/Player"+str(playerID)+"Deck.tres")
+@onready var uniquePlayerDeck = load(uniqueDeckStr)
 
 var initAnimationComplete = false
 
