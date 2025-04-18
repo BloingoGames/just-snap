@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=31 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Script" uid="uid://bt4r04hqrnr1" path="res://scripts/fmod_event_emitter_2d.gd" id="1_4c57u"]
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
@@ -8,9 +8,15 @@
 [ext_resource type="Script" uid="uid://bptniabsfg2p7" path="res://scripts/player_signals.gd" id="3_272bh"]
 [ext_resource type="Script" uid="uid://c1n5p47k0ieiu" path="res://scripts/dealer.gd" id="3_j3uem"]
 [ext_resource type="Script" uid="uid://djni6x5rwnyx" path="res://scripts/table.gd" id="4_qqaar"]
+[ext_resource type="Texture2D" uid="uid://bgvvwwp6okhc" path="res://assets/UI/Just_Snap-table_assets/UI_main_table.png" id="4_yaehf"]
+[ext_resource type="Texture2D" uid="uid://c1qg4xnhcqbw7" path="res://assets/UI/Just_Snap-table_assets/UI_player_hand_area_bottom.png" id="5_074og"]
 [ext_resource type="Script" uid="uid://bfl86bxkci8q3" path="res://scripts/table_slot.gd" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://cffn0bqxe1d0h" path="res://assets/UI/indicatorMiddle.png" id="5_w48qg"]
+[ext_resource type="Texture2D" uid="uid://qftyl1xssb8n" path="res://assets/UI/Just_Snap-table_assets/UI_player_hand_area_top.png" id="6_cegan"]
 [ext_resource type="Texture2D" uid="uid://b5bctg4wid8d6" path="res://assets/UI/indicatorSuits.png" id="6_vivmo"]
+[ext_resource type="Texture2D" uid="uid://c176olenbgiof" path="res://assets/UI/Just_Snap-table_assets/UI_special_table.png" id="7_82xsv"]
+[ext_resource type="Texture2D" uid="uid://3vs77e770xwq" path="res://assets/UI/Just_Snap-table_assets/UI_indicator_table.png" id="7_getpj"]
+[ext_resource type="Texture2D" uid="uid://dym6s2kpfomox" path="res://assets/UI/Just_Snap-table_assets/UI_score_area.png" id="8_ryguw"]
 [ext_resource type="Script" uid="uid://chl6ny4vvsajx" path="res://scripts/rhythm_indicator.gd" id="11_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://di8x7uox7g8aj" path="res://assets/UI/indicatorCursor.png" id="12_dg77c"]
 [ext_resource type="Shader" uid="uid://bskdwd1smbvl8" path="res://shaders/warble.gdshader" id="14_vivmo"]
@@ -142,6 +148,64 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7mycd")
 metadata/_edit_use_anchors_ = true
+
+[node name="Table UI" type="Node2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="MainTable" type="TextureRect" parent="Table UI"]
+offset_left = -85.0
+offset_top = -48.0
+offset_right = 87.0
+offset_bottom = 48.0
+texture = ExtResource("4_yaehf")
+
+[node name="PlayerHand1" type="TextureRect" parent="Table UI"]
+offset_left = -145.739
+offset_top = 63.9982
+offset_right = 148.261
+offset_bottom = 149.998
+texture = ExtResource("5_074og")
+
+[node name="PlayerHand2" type="TextureRect" parent="Table UI"]
+offset_left = -145.782
+offset_top = -150.397
+offset_right = 148.218
+offset_bottom = -64.3974
+texture = ExtResource("6_cegan")
+flip_h = true
+
+[node name="SpecialBorder" type="TextureRect" parent="Table UI"]
+offset_left = -192.0
+offset_top = -48.0
+offset_right = -106.0
+offset_bottom = 48.0
+texture = ExtResource("7_82xsv")
+stretch_mode = 2
+
+[node name="RhythmBorder" type="TextureRect" parent="Table UI"]
+offset_left = 110.0
+offset_top = -48.0
+offset_right = 196.0
+offset_bottom = 48.0
+texture = ExtResource("7_getpj")
+stretch_mode = 2
+
+[node name="Score1" type="TextureRect" parent="Table UI"]
+offset_left = -224.27
+offset_top = 92.1082
+offset_right = -146.27
+offset_bottom = 136.108
+texture = ExtResource("8_ryguw")
+stretch_mode = 2
+
+[node name="Score2" type="TextureRect" parent="Table UI"]
+offset_left = -224.27
+offset_top = -136.1
+offset_right = -146.27
+offset_bottom = -92.1
+texture = ExtResource("8_ryguw")
+stretch_mode = 2
+flip_v = true
 
 [node name="RhythmIndicator" type="Node2D" parent="." node_paths=PackedStringArray("CursorFollower", "FmodEventEmitter")]
 position = Vector2(152, 0)
