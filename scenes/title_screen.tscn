@@ -6,6 +6,21 @@
 [ext_resource type="FontFile" uid="uid://dq8bxm0lh8afv" path="res://assets/monogram.ttf" id="3_mgrm8"]
 [ext_resource type="Texture2D" uid="uid://dqm5u48iub8wy" path="res://assets/title/just snap transparent BG.png" id="3_s4lrb"]
 
+[sub_resource type="Animation" id="Animation_dc4i4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-44.1173, 54.1585)]
+}
+
 [sub_resource type="Animation" id="Animation_mgrm8"]
 resource_name = "moving_logo"
 length = 10.0
@@ -21,21 +36,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1.93187, 1.93187, 1.93187, 1.93187, 1.93187, 1.93187),
 "update": 0,
 "values": [Vector2(-44.1173, 54.1585), Vector2(-41.8, 54.1585), Vector2(-41.8, 49.2342), Vector2(-48.752, 49.2342), Vector2(-49, 54.158), Vector2(-44.1173, 54.1585)]
-}
-
-[sub_resource type="Animation" id="Animation_dc4i4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Logo:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-44.1173, 54.1585)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e54dn"]

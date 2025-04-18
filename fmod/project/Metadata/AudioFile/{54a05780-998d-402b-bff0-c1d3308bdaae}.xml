@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{54a05780-998d-402b-bff0-c1d3308bdaae}">
+		<property name="assetPath">
+			<value>Just Snap - MAMAMIA 135bpm.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>49.777777777777779</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2e1c5f57-4839-4b14-b4ad-46d558411363}</destination>
+		</relationship>
+	</object>
+</objects>
