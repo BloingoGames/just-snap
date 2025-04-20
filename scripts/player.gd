@@ -170,6 +170,12 @@ func _playCard(card : int, is_special : bool = false):
 	
 	if currentCard != null:
 		
+		if fmod_node.getNearestBeat() == Global.currentBeat and Global.beatClaimed:
+			return
+		else:
+			Global.currentBeat = fmod_node.getNearestBeat()
+			fmod_node.beatPreClaimed = true
+		
 		if not currentCard.playableBeats[fmod_node.getNearestBeat()-1]:
 			$AnimationPlayer.play("Miss")
 			return
@@ -201,6 +207,7 @@ func _playCard(card : int, is_special : bool = false):
 			#print("Slot " + str(card) + " replenished automatically")
 		
 		emit_signal("turn_finished")
+		Global.beatClaimed = true
 		
 	else:
 		print("Player "+str(playerID)+": No cards in that slot!")

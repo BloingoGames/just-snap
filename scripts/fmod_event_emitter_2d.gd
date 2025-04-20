@@ -10,6 +10,8 @@ var lastBeatTime : float
 var beatInterval = null
 var timeIntoCurrentBeat : float
 
+var beatPreClaimed = false
+
 var time_sig_upper : int
 var time_sig_lower : int
 
@@ -32,6 +34,9 @@ func _on_timeline_beat(params: Dictionary) -> void:
 	Global.currentTimeSig = str(time_sig_lower)+'-'+str(time_sig_upper)
 	if not beatInterval:
 		beatInterval = 60000.0 / tempo
+	
+	if not beatPreClaimed:
+		Global.currentBeat = params["beat"]
 	
 	#for testing: seems to be within 3ms of accuracy which should be good enough given how big our hit windows will be
 	#print(beatInterval)
@@ -66,3 +71,6 @@ func getNearestBeat():
 	#Pretty self explanatory. If more than half the interval away, nearest is the last one.
 	#If we're on the last beat in the bar and more than halfway, nearest is one. 
 	#Otherwise, last beat plus one
+
+func _physics_process(delta: float) -> void:
+	pass
