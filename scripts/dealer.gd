@@ -116,6 +116,11 @@ func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
 	if barTracker > 3:
 		print("Ran out of time")
 		end_turn()
+	
+	if players[current_player_idx].bot:
+		var currentPlayer = players[current_player_idx]
+		var randomCard = randi_range(0,currentPlayer.maxCardsInHand-1)
+		currentPlayer.playCard(randomCard,false)
 
 
 func _on_button_pressed() -> void:

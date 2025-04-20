@@ -80,8 +80,8 @@ _data = {
 &"beat": SubResource("Animation_ycdy4")
 }
 
-[sub_resource type="Animation" id="Animation_1u8w0"]
-resource_name = "camera_wobble"
+[sub_resource type="Animation" id="Animation_0odxb"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -89,10 +89,10 @@ tracks/0/path = NodePath("Camera2D:zoom")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.28, 0.346667, 0.433333, 0.5, 0.633333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2)]
+"values": [Vector2(2, 2)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -107,8 +107,8 @@ tracks/1/keys = {
 "values": [Vector2(-1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_0odxb"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_1u8w0"]
+resource_name = "camera_wobble"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -116,10 +116,10 @@ tracks/0/path = NodePath("Camera2D:zoom")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.28, 0.346667, 0.433333, 0.5, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(2, 2)]
+"values": [Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -418,14 +418,17 @@ libraries = {
 [node name="PlayerSignals" type="Node2D" parent="."]
 script = ExtResource("3_272bh")
 
-[node name="Player1" parent="." instance=ExtResource("1_78llg")]
+[node name="Player1" parent="." node_paths=PackedStringArray("Table", "fmod_node") instance=ExtResource("1_78llg")]
 position = Vector2(0, 120)
+Table = NodePath("../Table")
+fmod_node = NodePath("../FmodEventEmitter2D")
 
 [node name="Player2" parent="." node_paths=PackedStringArray("Table", "fmod_node") instance=ExtResource("1_78llg")]
 position = Vector2(0, -120)
 playerID = 1
 Table = NodePath("../Table")
 flipped = true
+bot = true
 fmod_node = NodePath("../FmodEventEmitter2D")
 
 [node name="Dealer" type="Node2D" parent="." node_paths=PackedStringArray("Deck", "Player1", "Player2")]
@@ -448,6 +451,7 @@ text = "Player x wins!"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="Dealer/Label"]
+layout_mode = 0
 offset_left = 8.71248
 offset_top = 38.2376
 offset_right = 160.712

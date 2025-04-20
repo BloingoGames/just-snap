@@ -12,6 +12,8 @@ signal try_snap
 @export var Table : Node2D
 @export var flipped = false
 
+@export var bot = false
+
 var currentBar : int
 
 @onready var uniqueDeckStr = str("res://data/Player"+str(playerID)+"Deck.tres")
@@ -146,7 +148,7 @@ func beatAccuracy():
 			$AnimationPlayer.play("Perfect")
 	return true
 
-func _playCard(card : int, is_special : bool = false):
+func playCard(card : int, is_special : bool = false):
 	
 	if not initAnimationComplete:
 		return
@@ -228,7 +230,7 @@ func _countCards():
 	return count
 	
 func _input(event) -> void:
-	if is_active_turn:
+	if is_active_turn and not bot:
 		if event is InputEventKey and event.pressed: #if detected input is a keypress and *pressed* not *released*.
 			var pressedKey = event["keycode"]
 			if pressedKey in playerControls[playerID]: #check if it's in the player's controls.			
@@ -242,9 +244,9 @@ func _input(event) -> void:
 				
 func _processControls(action : String):
 	if action.begins_with("Card"):
-		_playCard(int(action.substr(4)), false)
+		playCard(int(action.substr(4)), false)
 	if action.begins_with("Shift_Card"):
-		_playCard(int(action.substr(11)), true)
+		playCard(int(action.substr(11)), true)
 	
 func _physics_process(delta):
 	pass
