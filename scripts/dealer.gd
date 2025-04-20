@@ -10,6 +10,8 @@ var lastBar = 1
 var current_player_idx = 0
 var players = []
 
+var gameOver = false
+
 
 func _ready() -> void:
 	players = [Player1, Player2]
@@ -95,7 +97,15 @@ func end_turn():
 	start_turn()
 	
 func end_game():
-	print("game over")
+	var lastWinner
+	var winningPlayer
+	for player in players:
+		if not lastWinner or player.score > lastWinner.score:
+			winningPlayer = player
+			lastWinner = winningPlayer
+	$Label.visible = true
+	$Label.text = "Player " + str(winningPlayer.playerID+1) + " wins!"
+	gameOver = true
 
 
 func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
@@ -106,3 +116,11 @@ func _on_fmod_event_emitter_2d_timeline_beat(params: Dictionary) -> void:
 	if barTracker > 3:
 		print("Ran out of time")
 		end_turn()
+
+
+func _on_button_pressed() -> void:
+	Global.restart()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and gameOver: #Press any key to end game
+		Global.restart()

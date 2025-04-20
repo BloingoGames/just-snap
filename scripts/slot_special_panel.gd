@@ -5,6 +5,9 @@ var warble_amount = 0.009
 @export var SpecialSlot : Node2D
 @export var PlayerSignals : Node2D
 
+func _ready() -> void:
+	material.set_shader_parameter("strength", 0)
+
 func _physics_process(delta: float) -> void:
 	if warbling:
 		i += 1

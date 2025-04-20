@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ct7volyo6pjkb"]
+[gd_scene load_steps=36 format=3 uid="uid://ct7volyo6pjkb"]
 
 [ext_resource type="Script" uid="uid://bt4r04hqrnr1" path="res://scripts/fmod_event_emitter_2d.gd" id="1_4c57u"]
 [ext_resource type="Material" uid="uid://mp0hoq46nq1q" path="res://shaders/main.tres" id="1_5vw27"]
@@ -23,6 +23,7 @@
 [ext_resource type="Shader" uid="uid://bskdwd1smbvl8" path="res://shaders/warble.gdshader" id="14_vivmo"]
 [ext_resource type="Texture2D" uid="uid://bqtcgai06li4v" path="res://assets/table/bloingBorder.png" id="14_w48qg"]
 [ext_resource type="Script" uid="uid://bbylqtbkx2s45" path="res://scripts/slot_special_panel.gd" id="16_2cqfq"]
+[ext_resource type="Script" uid="uid://8rio0qyobkjc" path="res://scripts/camera.gd" id="19_1u8w0"]
 
 [sub_resource type="Curve2D" id="Curve2D_ycdy4"]
 _data = {
@@ -77,6 +78,66 @@ tracks/1/keys = {
 _data = {
 &"RESET": SubResource("Animation_w48qg"),
 &"beat": SubResource("Animation_ycdy4")
+}
+
+[sub_resource type="Animation" id="Animation_1u8w0"]
+resource_name = "camera_wobble"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.28, 0.346667, 0.433333, 0.5, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2), Vector2(2.1, 2), Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0odxb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lswn8"]
+_data = {
+&"RESET": SubResource("Animation_0odxb"),
+&"camera_wobble": SubResource("Animation_1u8w0")
 }
 
 [sub_resource type="Animation" id="Animation_4c57u"]
@@ -357,10 +418,8 @@ libraries = {
 [node name="PlayerSignals" type="Node2D" parent="."]
 script = ExtResource("3_272bh")
 
-[node name="Player1" parent="." node_paths=PackedStringArray("Table", "fmod_node") instance=ExtResource("1_78llg")]
+[node name="Player1" parent="." instance=ExtResource("1_78llg")]
 position = Vector2(0, 120)
-Table = NodePath("../Table")
-fmod_node = NodePath("../FmodEventEmitter2D")
 
 [node name="Player2" parent="." node_paths=PackedStringArray("Table", "fmod_node") instance=ExtResource("1_78llg")]
 position = Vector2(0, -120)
@@ -375,9 +434,40 @@ Deck = NodePath("../Deck")
 Player1 = NodePath("../Player1")
 Player2 = NodePath("../Player2")
 
+[node name="Label" type="Label" parent="Dealer"]
+visible = false
+z_index = 5
+offset_left = -84.202
+offset_top = -14.9008
+offset_right = 83.798
+offset_bottom = 11.0992
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("10_d13ii")
+theme_override_font_sizes/font_size = 32
+text = "Player x wins!"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Dealer/Label"]
+offset_left = 8.71248
+offset_top = 38.2376
+offset_right = 160.712
+offset_bottom = 73.2376
+theme_type_variation = &"FlatButton"
+theme_override_constants/outline_size = 4
+theme_override_constants/align_to_largest_stylebox = 0
+theme_override_fonts/font = ExtResource("10_d13ii")
+text = "Press any key to restart"
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-1, 0)
 zoom = Vector2(2, 2)
+script = ExtResource("19_1u8w0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_lswn8")
+}
 
 [node name="Table" type="Node2D" parent="." node_paths=PackedStringArray("PlayerSignals", "SnapSlots", "SnapAnimator")]
 script = ExtResource("4_qqaar")
@@ -432,6 +522,7 @@ script = ExtResource("5_lquwl")
 [connection signal="try_snap" from="Player1" to="PlayerSignals" method="_on_player_1_try_snap"]
 [connection signal="card_animation_finished" from="Player2" to="PlayerSignals" method="_on_player_2_card_animation_finished"]
 [connection signal="try_snap" from="Player2" to="PlayerSignals" method="_on_player_2_try_snap"]
+[connection signal="pressed" from="Dealer/Label/Button" to="Dealer" method="_on_button_pressed"]
 [connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table" method="_on_slot_1_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/SlotSpecial" to="Table/SlotSpecialPanel" method="_on_slot_special_child_entered_tree"]
 [connection signal="child_entered_tree" from="Table/SnapSlots/Slot0" to="Table" method="_on_slot_0_child_entered_tree"]
