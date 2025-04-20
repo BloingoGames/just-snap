@@ -37,6 +37,7 @@ func _on_timeline_beat(params: Dictionary) -> void:
 	
 	if not beatPreClaimed:
 		Global.currentBeat = params["beat"]
+		Global.beatClaimed = false
 	
 	#for testing: seems to be within 3ms of accuracy which should be good enough given how big our hit windows will be
 	#print(beatInterval)

@@ -172,18 +172,19 @@ func playCard(card : int, is_special : bool = false):
 	
 	if currentCard != null:
 		
-		if fmod_node.getNearestBeat() == Global.currentBeat and Global.beatClaimed:
-			return
-		else:
-			Global.currentBeat = fmod_node.getNearestBeat()
-			fmod_node.beatPreClaimed = true
-		
 		if not currentCard.playableBeats[fmod_node.getNearestBeat()-1]:
 			$AnimationPlayer.play("Miss")
 			return
 		
 		if not beatAccuracy():
 			return
+			
+		if fmod_node.getNearestBeat() == Global.currentBeat and Global.beatClaimed:
+			print("bad time")
+			return
+		else:
+			Global.currentBeat = fmod_node.getNearestBeat()
+			fmod_node.beatPreClaimed = true
 		
 		currentCard.hideIndicator() #hide the little rhythm indicator above the card when thrown
 		# 'targetSlot' target depends on whether card placed as special
