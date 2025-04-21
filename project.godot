@@ -31,6 +31,9 @@ DSP/dsp_buffer_count=4
 config/name="Just Snap"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/image="uid://bp0tk2euudggs"
+config/icon="uid://d30ydswoug7u6"
+boot_splash/minimum_display_time=2000
 
 [autoload]
 
@@ -41,8 +44,6 @@ Global="*res://scripts/global.gd"
 
 window/size/viewport_width=960
 window/size/viewport_height=540
-window/size/resizable=false
-window/size/borderless=true
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
